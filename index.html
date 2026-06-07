@@ -81,10 +81,15 @@
       min-height: 100dvh;
       display: flex;
       flex-direction: column;
-      padding-bottom: calc(var(--nav-h) + var(--safe-b) + 34px);
+      padding-bottom: calc(var(--nav-h) + var(--safe-b) + 16px);
+;
       overflow-x: hidden;
     }
-
+/* Dans .nav-btn.active ou .nav-btn.selected */
+.nav-btn.active {
+  background: rgba(200, 116, 42, 0.12);
+  border-radius: 12px;
+}
     header {
       display: flex;
       align-items: center;
@@ -195,16 +200,15 @@
 
     .bottom-nav {
       position: fixed;
-      bottom: 12px;
-      left: max(10px, calc(env(safe-area-inset-left, 0px) + 8px));
-      right: max(10px, calc(env(safe-area-inset-right, 0px) + 8px));
+      bottom: 0px;
+      left: 0;
+      right: 0;
       background: linear-gradient(145deg, rgba(255, 249, 239, 0.94), rgba(248, 237, 221, 0.92));
-      border: 1px solid rgba(209, 180, 148, 0.88);
-      border-radius: 22px;
+      border-top: 1px solid rgba(209, 180, 148, 0.6);  
+      border-radius: 0px;
       display: flex;
-      gap: 2px;
-      padding: 4px;
-      padding-bottom: calc(4px + var(--safe-b));
+      gap: 0;
+      padding: 4px 8px calc(6px + var(--safe-b)) 8px; 
       z-index: 100;
       box-shadow: 0 16px 38px rgba(66, 40, 17, 0.2), 0 4px 14px rgba(66, 40, 17, 0.12);
       backdrop-filter: blur(12px);
