@@ -371,9 +371,9 @@ function choisirRecetteAleatoire(type, liste) {
 }
 
 var audioVolumes = {
-  click:    0.5,    // son de clic — discret
-  roulette: 0.5,    // son pendant le tirage
-  reveal:   0.5     // son au resultat
+  click:    0.3,    // son de clic — discret
+  roulette: 0.4,    // son pendant le tirage
+  reveal:   0.4     // son au resultat
 };
 
 function getAudioElement(kind) {
