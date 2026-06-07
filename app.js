@@ -370,12 +370,18 @@ function choisirRecetteAleatoire(type, liste) {
   return candidate;
 }
 
+var audioVolumes = {
+  click:    0.5,    // son de clic — discret
+  roulette: 0.5,    // son pendant le tirage
+  reveal:   0.5     // son au resultat
+};
+
 function getAudioElement(kind) {
   if (!SON_SURPRISE_ACTIF || !audioFiles[kind]) return null;
   if (!audioElements[kind]) {
-    var a       = new Audio(audioFiles[kind]);
-    a.preload   = 'auto';
-    a.volume    = 0.95;
+    var a     = new Audio(audioFiles[kind]);
+    a.preload = 'auto';
+    a.volume  = audioVolumes[kind] !== undefined ? audioVolumes[kind] : 0.4;
     audioElements[kind] = a;
   }
   return audioElements[kind];
