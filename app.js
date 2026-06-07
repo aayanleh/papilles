@@ -85,6 +85,52 @@ document.querySelectorAll('[data-page]').forEach(function(btn) {
   });
 });
 
+// ── INSTALLATION PWA (PC/MOBILE) ───────────────────────────────
+var deferredInstallPrompt = null;
+var installAppBtn = document.getElementById('install-app-btn');
+
+function afficherBoutonInstall(show) {
+  if (!installAppBtn) return;
+  installAppBtn.classList.toggle('show', !!show);
+}
+
+function estDejaInstallee() {
+  var standaloneIOS = window.navigator.standalone === true;
+  var standalonePWA = window.matchMedia && window.matchMedia('(display-mode: standalone)').matches;
+  return standaloneIOS || standalonePWA;
+}
+
+if (installAppBtn && estDejaInstallee()) {
+  afficherBoutonInstall(false);
+}
+
+window.addEventListener('beforeinstallprompt', function(e) {
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  afficherBoutonInstall(true);
+});
+
+window.addEventListener('appinstalled', function() {
+  deferredInstallPrompt = null;
+  afficherBoutonInstall(false);
+});
+
+if (installAppBtn) {
+  installAppBtn.addEventListener('click', async function() {
+    if (!deferredInstallPrompt) return;
+
+    deferredInstallPrompt.prompt();
+    try {
+      await deferredInstallPrompt.userChoice;
+    } catch (e) {
+      // Rien: certains navigateurs peuvent rejeter la promesse.
+    }
+
+    deferredInstallPrompt = null;
+    afficherBoutonInstall(false);
+  });
+}
+
 // ── RENDU HTML D'UN BADGE DE DIFFICULTÉ ─────────────────────────
 function badgeDiff(d) {
   var cls = (d === 'facile' || d === 'très facile') ? 'diff-facile'

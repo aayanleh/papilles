@@ -9,6 +9,17 @@
   <meta name="apple-mobile-web-app-title" content="Papilles" />
   <meta name="application-name" content="Papilles" />
   <meta name="theme-color" content="#f6f2ea" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Papilles" />
+  <meta property="og:title" content="Papilles - Idées recettes selon l'humeur" />
+  <meta property="og:description" content="Choisis ton humeur, Papilles te propose le plat parfait en quelques secondes." />
+  <meta property="og:url" content="https://ayanlehmahdi.github.io/papilles/" />
+  <meta property="og:image" content="https://ayanlehmahdi.github.io/papilles/icons/papille_social_preview_v2.jpg" />
+  <meta property="og:image:alt" content="Aperçu Papilles, application de recommandations de recettes" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Papilles - Idées recettes selon l'humeur" />
+  <meta name="twitter:description" content="Des idées rapides de plats, entrées et desserts selon ton humeur." />
+  <meta name="twitter:image" content="https://ayanlehmahdi.github.io/papilles/icons/papille_social_preview_v2.jpg" />
   <link rel="icon" href="favicon.ico" sizes="any" />
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-192.jpg" />
@@ -65,6 +76,41 @@
       z-index: 80;
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
+    }
+    
+    .install-app-btn {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 1px solid #b46222;
+      background: linear-gradient(120deg, #c8742a, #b94f39);
+      color: #fff8ee;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: .75rem;
+      font-weight: 800;
+      letter-spacing: .01em;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 8px 18px rgba(185, 79, 57, 0.32);
+      transition: transform .2s ease, filter .2s ease;
+      z-index: 2;
+    }
+    
+    .install-app-btn.show {
+      display: inline-flex;
+    }
+    
+    .install-app-btn:hover {
+      transform: translateY(-50%) scale(1.03);
+      filter: brightness(1.05);
+    }
+    
+    .install-app-btn:active {
+      transform: translateY(-50%) scale(.98);
     }
 
     .logo {
@@ -778,6 +824,12 @@
       }
 
       .desktop-nav-btn { font-size: .88rem; padding: 8px 18px; }
+      
+      .install-app-btn {
+        right: 28px;
+        font-size: .82rem;
+        padding: 9px 14px;
+      }
 
       main { padding: 44px 32px 32px; max-width: 1140px; }
       .mood-grid { max-width: 600px; }
@@ -805,6 +857,7 @@
 <!-- HEADER -->
 <header>
   <div class="logo">Papilles 👅</div>
+  <button class="install-app-btn" id="install-app-btn" type="button" aria-label="Installer l'application">⬇ Installer</button>
   <nav class="desktop-nav">
     <button class="desktop-nav-btn active" data-page="plat">🍽️ Plat</button>
     <button class="desktop-nav-btn" data-page="entree">🥗 Entrée</button>
