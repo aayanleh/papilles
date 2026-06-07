@@ -1,20 +1,15 @@
 // ================================================================
-// PAPILLES — Logique applicative
-// RENOMME CE FICHIER EN : app.js
-// Place-le dans le MÊME dossier que index.html et recettes.js
+// PAPILLES -- Logique applicative
 // ================================================================
 
-// ── HISTORIQUE 3 JOURS ──────────────────────────────────────────
-// Quand tu ouvres une recette, elle est mémorisée.
-// Elle n'apparaît plus en première suggestion pendant JOURS_BLOCAGE jours.
-
-const HISTORY_KEY   = 'papilles_historique';
-const JOURS_BLOCAGE = 3;
-const TOP_PLAT_KEY  = 'papilles_top_plat_jour';
+// -- HISTORIQUE 3 JOURS ------------------------------------------
+var HISTORY_KEY   = 'papilles_historique';
+var JOURS_BLOCAGE = 3;
+var TOP_PLAT_KEY  = 'papilles_top_plat_jour';
 
 function lireHistorique() {
   try {
-    const data = localStorage.getItem(HISTORY_KEY);
+    var data = localStorage.getItem(HISTORY_KEY);
     return data ? JSON.parse(data) : { plat: [], entree: [], dessert: [] };
   } catch (e) {
     return { plat: [], entree: [], dessert: [] };
@@ -25,25 +20,25 @@ function sauverHistorique(h) {
   try {
     localStorage.setItem(HISTORY_KEY, JSON.stringify(h));
   } catch (e) {
-    console.warn('Papilles : impossible de sauvegarder l\'historique.', e);
+    console.warn('Papilles : sauvegarde historique impossible.', e);
   }
 }
 
 function nettoyerHistorique(h) {
-  const limite = JOURS_BLOCAGE * 24 * 60 * 60 * 1000;
-  const now = Date.now();
-  ['plat', 'entree', 'dessert'].forEach(type => {
-    h[type] = (h[type] || []).filter(e => (now - e.ts) < limite);
+  var limite = JOURS_BLOCAGE * 24 * 60 * 60 * 1000;
+  var now    = Date.now();
+  ['plat', 'entree', 'dessert'].forEach(function(type) {
+    h[type] = (h[type] || []).filter(function(e) { return (now - e.ts) < limite; });
   });
   return h;
 }
 
 function enregistrerDansHistorique(type, id) {
-  const h = nettoyerHistorique(lireHistorique());
-  const liste = h[type] || [];
-  const idx = liste.findIndex(e => e.id === id);
+  var h    = nettoyerHistorique(lireHistorique());
+  var liste = h[type] || [];
+  var idx   = liste.findIndex(function(e) { return e.id === id; });
   if (idx >= 0) {
-    liste[idx].ts = Date.now(); // Rafraîchir le timestamp
+    liste[idx].ts = Date.now();
   } else {
     liste.push({ id: id, ts: Date.now() });
   }
@@ -52,40 +47,33 @@ function enregistrerDansHistorique(type, id) {
 }
 
 function estVuRecemment(type, id) {
-  const h = nettoyerHistorique(lireHistorique());
-  const limite = JOURS_BLOCAGE * 24 * 60 * 60 * 1000;
-  const now = Date.now();
-  return (h[type] || []).some(e => e.id === id && (now - e.ts) < limite);
+  var h      = nettoyerHistorique(lireHistorique());
+  var limite = JOURS_BLOCAGE * 24 * 60 * 60 * 1000;
+  var now    = Date.now();
+  return (h[type] || []).some(function(e) { return e.id === id && (now - e.ts) < limite; });
 }
 
-// ── ENRICHISSEMENT DES DONNÉES ──────────────────────────────────
-// On ajoute _type à chaque recette pour que le modal sache d'où ça vient
-RECETTES.plats    = RECETTES.plats.map(r    => Object.assign({}, r, { _type: 'plat'    }));
-RECETTES.entrees  = RECETTES.entrees.map(r  => Object.assign({}, r, { _type: 'entree'  }));
-RECETTES.desserts = RECETTES.desserts.map(r => Object.assign({}, r, { _type: 'dessert' }));
+// -- ENRICHISSEMENT DES DONNEES ----------------------------------
+RECETTES.plats    = RECETTES.plats.map(function(r)    { return Object.assign({}, r, { _type: 'plat'    }); });
+RECETTES.entrees  = RECETTES.entrees.map(function(r)  { return Object.assign({}, r, { _type: 'entree'  }); });
+RECETTES.desserts = RECETTES.desserts.map(function(r) { return Object.assign({}, r, { _type: 'dessert' }); });
 
-// ── NAVIGATION ──────────────────────────────────────────────────
+// -- NAVIGATION --------------------------------------------------
 function naviguerVers(page) {
-  document.querySelectorAll('.page').forEach(function(p) {
-    p.classList.remove('active');
-  });
+  document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
   var pageEl = document.getElementById('page-' + page);
   if (pageEl) pageEl.classList.add('active');
-
   document.querySelectorAll('[data-page]').forEach(function(b) {
     b.classList.toggle('active', b.dataset.page === page);
   });
-
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 document.querySelectorAll('[data-page]').forEach(function(btn) {
-  btn.addEventListener('click', function() {
-    naviguerVers(btn.dataset.page);
-  });
+  btn.addEventListener('click', function() { naviguerVers(btn.dataset.page); });
 });
 
-// ── INSTALLATION PWA (PC/MOBILE) ───────────────────────────────
+// -- INSTALLATION PWA --------------------------------------------
 var deferredInstallPrompt = null;
 var installAppBtn = document.getElementById('install-app-btn');
 
@@ -95,9 +83,8 @@ function afficherBoutonInstall(show) {
 }
 
 function estDejaInstallee() {
-  var standaloneIOS = window.navigator.standalone === true;
-  var standalonePWA = window.matchMedia && window.matchMedia('(display-mode: standalone)').matches;
-  return standaloneIOS || standalonePWA;
+  return window.navigator.standalone === true
+    || (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
 }
 
 function estNavigateurDesktop() {
@@ -108,14 +95,8 @@ function estContexteInstallableWeb() {
   return location.protocol === 'https:' || location.hostname === 'localhost';
 }
 
-if (installAppBtn && estDejaInstallee()) {
-  afficherBoutonInstall(false);
-}
-
-if (installAppBtn && !estDejaInstallee() && estContexteInstallableWeb() && estNavigateurDesktop()) {
-  // Fallback desktop: le prompt navigateur peut ne pas être immédiatement disponible.
-  afficherBoutonInstall(true);
-}
+if (installAppBtn && estDejaInstallee())                                              afficherBoutonInstall(false);
+if (installAppBtn && !estDejaInstallee() && estContexteInstallableWeb() && estNavigateurDesktop()) afficherBoutonInstall(true);
 
 window.addEventListener('beforeinstallprompt', function(e) {
   e.preventDefault();
@@ -131,34 +112,26 @@ window.addEventListener('appinstalled', function() {
 if (installAppBtn) {
   installAppBtn.addEventListener('click', async function() {
     if (!deferredInstallPrompt) {
-      alert('Installation PC:\nChrome/Edge > menu (⋮) > Installer Papilles.\n\nSi l\'option n\'apparaît pas: recharge la page (Ctrl+F5) puis réessaie.');
+      alert('Installation PC :\nChrome/Edge > menu (3 points) > Installer Papilles.\nSi absent : recharge la page (Ctrl+F5) puis réessaie.');
       return;
     }
-
     deferredInstallPrompt.prompt();
-    try {
-      await deferredInstallPrompt.userChoice;
-    } catch (e) {
-      // Rien: certains navigateurs peuvent rejeter la promesse.
-    }
-
+    try { await deferredInstallPrompt.userChoice; } catch (e) {}
     deferredInstallPrompt = null;
     afficherBoutonInstall(false);
   });
 }
 
-// ── RENDU HTML D'UN BADGE DE DIFFICULTÉ ─────────────────────────
+// -- BADGE DE DIFFICULTE -----------------------------------------
 function badgeDiff(d) {
-  var cls = (d === 'facile' || d === 'très facile') ? 'diff-facile'
+  var cls = (d === 'facile' || d === 'tres facile' || d === 'très facile') ? 'diff-facile'
           : (d === 'moyen') ? 'diff-moyen' : 'diff-difficile';
   return '<span class="badge ' + cls + '">' + d + '</span>';
 }
 
-// ── RENDU HTML D'UNE CARTE RECETTE ──────────────────────────────
+// -- RENDU HTML D'UNE CARTE RECETTE ------------------------------
 function carteHTML(r, recent) {
-  var badgeRecent = recent
-    ? '<span class="badge badge-recent">🔄 Vu récemment</span>'
-    : '';
+  var badgeRecent = recent ? '<span class="badge badge-recent">Vu récemment</span>' : '';
   return [
     '<div class="recipe-card' + (recent ? ' card-recent' : '') + '"',
     '     onclick="ouvrirModal(\'' + r._type + '\', ' + r.id + ')"',
@@ -171,7 +144,7 @@ function carteHTML(r, recent) {
     '    </div>',
     '    <div class="card-desc">' + r.description + '</div>',
     '    <div class="card-meta">',
-    '      <span class="badge">⏱ ' + r.temps + ' min</span>',
+    '      <span class="badge">&#9200; ' + r.temps + ' min</span>',
     '      ' + badgeDiff(r.difficulte),
     '      ' + badgeRecent,
     '    </div>',
@@ -180,109 +153,82 @@ function carteHTML(r, recent) {
   ].join('\n');
 }
 
-// ── AFFICHAGE D'UNE GRILLE AVEC GESTION DE L'HISTORIQUE ─────────
+// -- AFFICHAGE D'UNE GRILLE --------------------------------------
 function afficherGrille(containerId, recettes) {
   var el = document.getElementById(containerId);
   if (!el) return;
 
   if (!recettes || recettes.length === 0) {
-    el.innerHTML = [
-      '<div class="empty">',
-      '  <div class="empty-icon">🍽️</div>',
-      '  <p>Aucune recette pour cette sélection.<br>',
-      '  <small>Tu peux en ajouter dans <strong>recettes.js</strong> !</small></p>',
-      '</div>'
-    ].join('');
+    el.innerHTML = '<div class="empty"><div class="empty-icon">&#127859;</div><p>Aucune recette pour cette sélection.</p></div>';
     return;
   }
 
-  var type = recettes[0]._type;
-  var fraiches  = recettes.filter(function(r) { return !estVuRecemment(type, r.id); });
-  var recentes  = recettes.filter(function(r) { return  estVuRecemment(type, r.id); });
-
-  var html = '';
+  var type     = recettes[0]._type;
+  var fraiches = recettes.filter(function(r) { return !estVuRecemment(type, r.id); });
+  var recentes = recettes.filter(function(r) { return  estVuRecemment(type, r.id); });
+  var html     = '';
 
   if (fraiches.length > 0) {
     html += fraiches.map(function(r) { return carteHTML(r, false); }).join('');
   }
-
   if (recentes.length > 0) {
-    var separateur = fraiches.length === 0
-      ? '🔄 Tout a déjà été proposé cette semaine — mais voilà quand même&nbsp;:'
-      : 'Déjà vu récemment';
-    html += '<div class="separator-recent"><span>' + separateur + '</span></div>';
+    var sep = fraiches.length === 0
+      ? 'Tout a deja ete propose cette semaine — voila quand meme :'
+      : 'Deja vu récemment';
+    html += '<div class="separator-recent"><span>' + sep + '</span></div>';
     html += recentes.map(function(r) { return carteHTML(r, true); }).join('');
   }
 
   el.innerHTML = html;
 }
 
-// ── PAGE PLAT ───────────────────────────────────────────────────
+// -- PAGE PLAT ---------------------------------------------------
 var moodLabels = {
-  'fatigué':  'Pour quand t\'es à plat 😴',
-  'joyeux':   'Pour célébrer ce beau jour 😄',
-  'stressé':  'Pour décompresser 😤',
-  'amoureux': 'Pour faire battre les cœurs 🥰',
-  'sportif':  'Pour le corps en mouvement 💪',
-  'curieux':  'Pour voyager sans bouger 🌍'
+  'fatigué':  'Pour quand t\'es a plat',
+  'joyeux':   'Pour celebrer ce beau jour',
+  'stressé':  'Pour decompresser',
+  'amoureux': 'Pour faire battre les cœurs',
+  'sportif':  'Pour le corps en mouvement',
+  'curieux':  'Pour voyager sans bouger'
 };
 
-// Limite volontaire pour éviter la surcharge de décision.
 var NB_SUGGESTIONS_HUMEUR = 2;
-var lastSurpriseByType = { plat: null, entree: null, dessert: null };
-var DUREE_ROULETTE_MS = 500;
-var SON_SURPRISE_ACTIF = true;
-var audioUnlocked = false;
+var lastSurpriseByType    = { plat: null, entree: null, dessert: null };
+var DUREE_ROULETTE_MS     = 500;
+var SON_SURPRISE_ACTIF    = true;
+var audioUnlocked         = false;
+
+// FIX #7 : audioFiles et audioElements ont les memes 3 cles
+// click    = clic sur un element interactif
+// roulette = son pendant l'animation de tirage
+// reveal   = son a l'affichage du resultat
 var audioFiles = {
-  reveal: 'sounds/roulette_bOfDHqhZ.mp3'
+  click:    'sounds/click.mp3',
+  roulette: 'sounds/roulette_bOfDHqhZ.mp3',
+  reveal:   'sounds/roulette_bOfDHqhZ.mp3'
 };
+
 var audioElements = {
+  click:    null,
   roulette: null,
-  reveal: null
+  reveal:   null
 };
 
 var moodPreferences = {
-  'fatigué': {
-    maxTemps: 30,
-    preferDifficulte: ['très facile', 'facile'],
-    tags: ['rapide', 'express', 'riz', 'familial', 'réconfort']
-  },
-  'joyeux': {
-    maxTemps: 40,
-    preferDifficulte: ['facile', 'moyen'],
-    tags: ['partage', 'convivial', 'barbecue', 'street food']
-  },
-  'stressé': {
-    maxTemps: 35,
-    preferDifficulte: ['très facile', 'facile'],
-    tags: ['réconfort', 'mijoté', 'riz', 'familial']
-  },
-  'amoureux': {
-    maxTemps: 50,
-    preferDifficulte: ['facile', 'moyen'],
-    tags: ['partage', 'tradition', 'sauce', 'barbecue']
-  },
-  'sportif': {
-    maxTemps: 40,
-    preferDifficulte: ['facile', 'moyen'],
-    tags: ['protéines', 'complet', 'viande', 'poulet']
-  },
-  'curieux': {
-    maxTemps: 60,
-    preferDifficulte: ['moyen', 'facile'],
-    tags: ['tradition', 'africain', 'street food', 'poisson']
-  }
+  'fatigué':  { maxTemps: 30, preferDifficulte: ['très facile', 'facile'], tags: ['rapide', 'express', 'riz', 'familial', 'reconfort'] },
+  'joyeux':   { maxTemps: 40, preferDifficulte: ['facile', 'moyen'],       tags: ['partage', 'convivial', 'barbecue', 'street food'] },
+  'stressé':  { maxTemps: 35, preferDifficulte: ['très facile', 'facile'], tags: ['reconfort', 'mijote', 'riz', 'familial'] },
+  'amoureux': { maxTemps: 50, preferDifficulte: ['facile', 'moyen'],       tags: ['partage', 'tradition', 'sauce', 'barbecue'] },
+  'sportif':  { maxTemps: 40, preferDifficulte: ['facile', 'moyen'],       tags: ['proteines', 'complet', 'viande', 'poulet'] },
+  'curieux':  { maxTemps: 60, preferDifficulte: ['moyen', 'facile'],       tags: ['tradition', 'africain', 'street food', 'poisson'] }
 };
 
 function bonusStableDuJour(id, mood) {
-  var d = new Date();
+  var d   = new Date();
   var cle = mood + '-' + id + '-' + d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
-  var h = 0;
-  for (var i = 0; i < cle.length; i++) {
-    h = ((h << 5) - h) + cle.charCodeAt(i);
-    h |= 0;
-  }
-  return Math.abs(h % 6); // 0..5
+  var h   = 0;
+  for (var i = 0; i < cle.length; i++) { h = ((h << 5) - h) + cle.charCodeAt(i); h |= 0; }
+  return Math.abs(h % 6);
 }
 
 function cleJour(offsetDays) {
@@ -292,20 +238,13 @@ function cleJour(offsetDays) {
 }
 
 function lireTopPlatJour() {
-  try {
-    var raw = localStorage.getItem(TOP_PLAT_KEY);
-    return raw ? JSON.parse(raw) : null;
-  } catch (e) {
-    return null;
-  }
+  try { var raw = localStorage.getItem(TOP_PLAT_KEY); return raw ? JSON.parse(raw) : null; }
+  catch (e) { return null; }
 }
 
 function sauverTopPlatJour(id, mood) {
-  try {
-    localStorage.setItem(TOP_PLAT_KEY, JSON.stringify({ id: id, mood: mood, day: cleJour(0) }));
-  } catch (e) {
-    console.warn('Papilles : impossible de sauvegarder le top plat du jour.', e);
-  }
+  try { localStorage.setItem(TOP_PLAT_KEY, JSON.stringify({ id: id, mood: mood, day: cleJour(0) })); }
+  catch (e) { console.warn('Papilles : sauvegarde top plat impossible.', e); }
 }
 
 function etaitTopHier(id) {
@@ -314,46 +253,31 @@ function etaitTopHier(id) {
 }
 
 function scorePlatPourHumeur(r, mood) {
-  var pref = moodPreferences[mood] || {};
+  var pref  = moodPreferences[mood] || {};
   var score = 0;
-  var tags = (r.tags || []).map(function(t) { return String(t).toLowerCase(); });
-  var diff = (r.difficulte || '').toLowerCase();
+  var tags  = (r.tags || []).map(function(t) { return String(t).toLowerCase(); });
+  var diff  = (r.difficulte || '').toLowerCase();
   var temps = Number(r.temps) || 999;
 
   if ((r.humeurs || []).indexOf(mood) !== -1) score += 60;
-  if (!estVuRecemment('plat', r.id)) score += 24;
-  if (etaitTopHier(r.id)) score -= 28;
+  if (!estVuRecemment('plat', r.id))          score += 24;
+  if (etaitTopHier(r.id))                     score -= 28;
 
   if (typeof pref.maxTemps === 'number') {
-    if (temps <= pref.maxTemps) score += 16;
-    else score += Math.max(-12, pref.maxTemps - temps);
+    score += (temps <= pref.maxTemps) ? 16 : Math.max(-12, pref.maxTemps - temps);
   }
-
-  if ((pref.preferDifficulte || []).indexOf(diff) !== -1) {
-    score += 10;
-  }
-
-  (pref.tags || []).forEach(function(tag) {
-    if (tags.indexOf(tag) !== -1) score += 4;
-  });
-
+  if ((pref.preferDifficulte || []).indexOf(diff) !== -1) score += 10;
+  (pref.tags || []).forEach(function(tag) { if (tags.indexOf(tag) !== -1) score += 4; });
   score += bonusStableDuJour(r.id, mood);
   return score;
 }
 
 function platsParHumeurPertinents(mood) {
-  var candidats = RECETTES.plats.filter(function(r) {
-    return (r.humeurs || []).indexOf(mood) !== -1;
-  });
-
-  if (!candidats.length) {
-    candidats = RECETTES.plats.slice();
-  }
+  var candidats = RECETTES.plats.filter(function(r) { return (r.humeurs || []).indexOf(mood) !== -1; });
+  if (!candidats.length) candidats = RECETTES.plats.slice();
 
   return candidats
-    .map(function(r) {
-      return { recette: r, score: scorePlatPourHumeur(r, mood) };
-    })
+    .map(function(r) { return { recette: r, score: scorePlatPourHumeur(r, mood) }; })
     .sort(function(a, b) {
       if (b.score !== a.score) return b.score - a.score;
       return (a.recette.temps || 0) - (b.recette.temps || 0);
@@ -362,7 +286,7 @@ function platsParHumeurPertinents(mood) {
 }
 
 function titreResultatHumeur(mood, nb) {
-  var base = moodLabels[mood] || '';
+  var base    = moodLabels[mood] || '';
   var labelNb = (nb <= 1) ? 'Ton plat du jour' : 'Ton plat du jour + 1 alternative';
   return base ? (base + ' · ' + labelNb) : labelNb;
 }
@@ -376,28 +300,20 @@ function marquerBoutonHumeur(mood) {
 function construireSelectionHumeur(mood, forceSurprise) {
   var classes = platsParHumeurPertinents(mood);
   if (!classes.length) return [];
-
-  if (!forceSurprise) {
-    return classes.slice(0, NB_SUGGESTIONS_HUMEUR);
-  }
+  if (!forceSurprise) return classes.slice(0, NB_SUGGESTIONS_HUMEUR);
 
   var pool = classes.slice(0, Math.min(classes.length, 6));
-  var idx = bonusStableDuJour(pool.length + mood.length, mood) % pool.length;
-  var principal = pool[idx];
+  var idx  = bonusStableDuJour(pool.length + mood.length, mood) % pool.length;
+  var principal    = pool[idx];
   var alternatives = classes.filter(function(r) { return r.id !== principal.id; });
   return [principal].concat(alternatives.slice(0, NB_SUGGESTIONS_HUMEUR - 1));
 }
 
 function afficherSuggestionsHumeur(mood, forceSurprise) {
   var found = construireSelectionHumeur(mood, !!forceSurprise);
-
   document.getElementById('plat-results-title').textContent = titreResultatHumeur(mood, found.length);
   afficherGrille('plat-grid', found);
-
-  if (found.length) {
-    sauverTopPlatJour(found[0].id, mood);
-  }
-
+  if (found.length) sauverTopPlatJour(found[0].id, mood);
   var res = document.getElementById('plat-results');
   res.style.display = 'block';
   setTimeout(function() { res.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80);
@@ -405,145 +321,100 @@ function afficherSuggestionsHumeur(mood, forceSurprise) {
 
 function choisirRecetteAleatoire(type, liste) {
   if (!liste || !liste.length) return null;
-  if (liste.length === 1) return liste[0];
-
-  var candidate = null;
-  var tentative = 0;
+  if (liste.length === 1)      return liste[0];
+  var candidate  = null;
+  var tentative  = 0;
   var previousId = lastSurpriseByType[type];
-
   while (tentative < 6) {
     candidate = liste[Math.floor(Math.random() * liste.length)];
     if (!candidate || candidate.id !== previousId) break;
     tentative++;
   }
-
   if (!candidate) candidate = liste[0];
   lastSurpriseByType[type] = candidate.id;
   return candidate;
 }
 
 function getAudioElement(kind) {
-  if (!SON_SURPRISE_ACTIF) return null;
-  if (!audioFiles[kind]) return null;
-
+  if (!SON_SURPRISE_ACTIF || !audioFiles[kind]) return null;
   if (!audioElements[kind]) {
-    var a = new Audio(audioFiles[kind]);
-    a.preload = 'auto';
-    a.volume = 0.95;
+    var a       = new Audio(audioFiles[kind]);
+    a.preload   = 'auto';
+    a.volume    = 0.95;
     audioElements[kind] = a;
   }
-
   return audioElements[kind];
 }
 
 function unlockAudioIfNeeded() {
   if (!SON_SURPRISE_ACTIF || audioUnlocked) return;
-
   var unlock = function() {
-    ['roulette', 'reveal'].forEach(function(kind) {
+    ['click', 'roulette', 'reveal'].forEach(function(kind) {
       var a = getAudioElement(kind);
       if (!a) return;
       try {
         a.muted = true;
-        var p = a.play();
+        var p   = a.play();
         if (p && typeof p.then === 'function') {
-          p.then(function() {
-            a.pause();
-            a.currentTime = 0;
-            a.muted = false;
-          }).catch(function() {
-            a.muted = false;
-          });
+          p.then(function() { a.pause(); a.currentTime = 0; a.muted = false; })
+           .catch(function()  { a.muted = false; });
         } else {
-          a.pause();
-          a.currentTime = 0;
-          a.muted = false;
+          a.pause(); a.currentTime = 0; a.muted = false;
         }
-      } catch (e) {
-        // Ignore: certains navigateurs bloquent malgré l'interaction.
-      }
+      } catch (e) {}
     });
     audioUnlocked = true;
     window.removeEventListener('pointerdown', unlock);
-    window.removeEventListener('touchstart', unlock);
+    window.removeEventListener('touchstart',  unlock);
   };
-
   window.addEventListener('pointerdown', unlock, { once: true, passive: true });
-  window.addEventListener('touchstart', unlock, { once: true, passive: true });
+  window.addEventListener('touchstart',  unlock, { once: true, passive: true });
 }
 
 function jouerFichierSon(kind) {
   try {
     var a = getAudioElement(kind);
     if (!a) return;
-
     a.currentTime = 0;
     var p = a.play();
-    if (p && typeof p.catch === 'function') {
-      p.catch(function() {
-        // Ignore: peut être bloqué si le navigateur refuse l'autoplay.
-      });
-    }
-  } catch (e) {
-    // En silence si l'audio est indisponible
-  }
+    if (p && typeof p.catch === 'function') p.catch(function() {});
+  } catch (e) {}
 }
 
 function arreterSon(kind) {
   var a = getAudioElement(kind);
   if (!a) return;
-  try {
-    a.pause();
-    a.currentTime = 0;
-  } catch (e) {
-    // Aucun traitement nécessaire.
-  }
+  try { a.pause(); a.currentTime = 0; } catch (e) {}
 }
 
-function jouerSonRoulette() {
-  jouerFichierSon('roulette');
+function jouerSonRoulette() { jouerFichierSon('roulette'); }
+function jouerSonReveal()   { jouerFichierSon('reveal');   }
+function jouerSonClick()    { jouerFichierSon('click');    }
+
+function activerSonClickGlobal() {
+  var sel = 'button, [data-page], .mood-btn, .envie-btn, .filter-tab, .recipe-card, #modal-close, [role="button"]';
+  document.addEventListener('click', function(e) {
+    var cible = e.target && e.target.closest ? e.target.closest(sel) : null;
+    if (cible) jouerSonClick();
+  }, true);
 }
 
-function jouerSonReveal() {
-  jouerFichierSon('reveal');
-}
-
+// -- SURPRISE CATEGORIE ------------------------------------------
 function afficherSurpriseCategorie(type) {
   var map = {
-    plat: {
-      titreId: 'plat-results-title',
-      gridId: 'plat-grid',
-      blocId: 'plat-results',
-      titre: '✨ Surprise Plat · 1 idée'
-    },
-    entree: {
-      titreId: 'entree-results-title',
-      gridId: 'entree-results-grid',
-      blocId: 'entree-results',
-      titre: '✨ Surprise Entrée · 1 idée'
-    },
-    dessert: {
-      titreId: 'dessert-results-title',
-      gridId: 'dessert-results-grid',
-      blocId: 'dessert-results',
-      titre: '✨ Surprise Dessert · 1 idée'
-    }
+    plat:    { titreId: 'plat-results-title',    gridId: 'plat-grid',          blocId: 'plat-results',    titre: 'Surprise Plat · 1 idee'    },
+    entree:  { titreId: 'entree-results-title',  gridId: 'entree-results-grid', blocId: 'entree-results',  titre: 'Surprise Entree · 1 idee'  },
+    dessert: { titreId: 'dessert-results-title', gridId: 'dessert-results-grid',blocId: 'dessert-results', titre: 'Surprise Dessert · 1 idee' }
   };
-
-  var cfg = map[type];
+  var cfg    = map[type];
   var source = (type === 'plat') ? RECETTES.plats : (type === 'entree') ? RECETTES.entrees : RECETTES.desserts;
   if (!cfg || !source || !source.length) return;
 
   var proposition = choisirRecetteAleatoire(type, source);
   if (!proposition) return;
 
-  if (type === 'plat') {
-    document.querySelectorAll('.mood-btn').forEach(function(b) { b.classList.remove('selected'); });
-  }
-
   var titre = document.getElementById(cfg.titreId);
   if (titre) titre.textContent = cfg.titre;
-
   afficherGrille(cfg.gridId, [proposition]);
 
   var bloc = document.getElementById(cfg.blocId);
@@ -553,47 +424,62 @@ function afficherSurpriseCategorie(type) {
   }
 }
 
-function lancerSurpriseAvecRoulette(type, btn) {
+// overrideFn : remplace afficherSurpriseCategorie (utile pour le plat mood-aware)
+function lancerSurpriseAvecRoulette(type, btn, overrideFn) {
   if (!btn) {
-    afficherSurpriseCategorie(type);
+    if (overrideFn) overrideFn(); else afficherSurpriseCategorie(type);
     jouerSonReveal();
     return;
   }
-
   if (btn.dataset.busy === '1') return;
 
-  var texteInitial = btn.innerHTML;
-  btn.dataset.busy = '1';
-  btn.disabled = true;
+  var texteInitial  = btn.innerHTML;
+  btn.dataset.busy  = '1';
+  btn.disabled      = true;
   btn.classList.add('is-spinning');
-  btn.innerHTML = '<span class="dice">🎲</span>Tirage...';
+  btn.innerHTML     = 'Tirage...';
   jouerSonRoulette();
 
   setTimeout(function() {
-    afficherSurpriseCategorie(type);
+    if (overrideFn) overrideFn(); else afficherSurpriseCategorie(type);
     arreterSon('roulette');
     jouerSonReveal();
-    btn.innerHTML = texteInitial;
+    btn.innerHTML     = texteInitial;
     btn.classList.remove('is-spinning');
-    btn.disabled = false;
-    btn.dataset.busy = '0';
+    btn.disabled      = false;
+    btn.dataset.busy  = '0';
   }, DUREE_ROULETTE_MS);
 }
+
+// -- FIX #3 : Surprise Plat respecte l'humeur selectionnee -------
+// Le libelle par defaut est lu depuis le HTML pour eviter les emojis dans le JS
+var surpriseBtn = document.getElementById('plat-surprise');
+var LIBELLE_SURPRISE_DEFAULT = surpriseBtn ? surpriseBtn.innerHTML : 'Surprise, decide pour moi';
+var LIBELLE_SURPRISE_MOOD    = 'Autre idee pour cette humeur';
 
 document.querySelectorAll('.mood-btn').forEach(function(btn) {
   btn.addEventListener('click', function() {
     var mood = btn.dataset.mood;
     marquerBoutonHumeur(mood);
     afficherSuggestionsHumeur(mood, false);
+    if (surpriseBtn) surpriseBtn.innerHTML = LIBELLE_SURPRISE_MOOD;
   });
 });
 
 unlockAudioIfNeeded();
+activerSonClickGlobal();
 
-var surpriseBtn = document.getElementById('plat-surprise');
 if (surpriseBtn) {
   surpriseBtn.addEventListener('click', function() {
-    lancerSurpriseAvecRoulette('plat', surpriseBtn);
+    var moodActive = document.querySelector('.mood-btn.selected');
+    if (moodActive) {
+      var mood = moodActive.dataset.mood;
+      lancerSurpriseAvecRoulette('plat', surpriseBtn, function() {
+        afficherSuggestionsHumeur(mood, true);
+      });
+    } else {
+      lancerSurpriseAvecRoulette('plat', surpriseBtn);
+    }
   });
 }
 
@@ -616,28 +502,26 @@ if (surpriseDessertBtn) {
 document.getElementById('plat-reset').addEventListener('click', function() {
   document.querySelectorAll('.mood-btn').forEach(function(b) { b.classList.remove('selected'); });
   document.getElementById('plat-results').style.display = 'none';
+  if (surpriseBtn) surpriseBtn.innerHTML = LIBELLE_SURPRISE_DEFAULT;
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-// ── PAGE ENTRÉE ─────────────────────────────────────────────────
+// -- PAGE ENTREE -------------------------------------------------
 var envieLabels = {
-  'frais':  'Frais & Léger 🌿',
-  'chaud':  'Chaud & Réconfortant 🔥',
-  'festif': 'Coloré & Festif 🎉',
-  'express':'Express ⚡'
+  'frais':   'Frais & Léger',
+  'chaud':   'Chaud & Réconfortant',
+  'festif':  'Coloré & Festif',
+  'express': 'Express'
 };
 
 document.querySelectorAll('#entree-grid .envie-btn').forEach(function(btn) {
   btn.addEventListener('click', function() {
     document.querySelectorAll('#entree-grid .envie-btn').forEach(function(b) { b.classList.remove('selected'); });
     btn.classList.add('selected');
-
     var envie = btn.dataset.envie;
     var found = RECETTES.entrees.filter(function(r) { return r.envies.indexOf(envie) !== -1; });
-
     document.getElementById('entree-results-title').textContent = envieLabels[envie] || '';
     afficherGrille('entree-results-grid', found);
-
     var res = document.getElementById('entree-results');
     res.style.display = 'block';
     setTimeout(function() { res.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80);
@@ -650,12 +534,22 @@ document.getElementById('entree-reset').addEventListener('click', function() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-// ── PAGE DESSERT ────────────────────────────────────────────────
+// -- PAGE DESSERT ------------------------------------------------
+// Labels affiches dans le titre des resultats
 var textureLabels = {
-  'chocolaté':    'Tout en chocolat 🍫',
-  'fruité':       'Fruité & Frais 🍓',
-  'croustillant': 'Croustillant à souhait 🥐',
-  'crémeux':      'Fondant & Crémeux 🍮'
+  'moelleux':     'Moelleux & Doux',
+  'cremeux':      'Crémeux & Fondant',
+  'croustillant': 'Croustillant & Doré',
+  'frais':        'Frais & Fruité'
+};
+
+// Mapping bouton -> textures acceptees dans recettes.js
+// Permet de couvrir plusieurs valeurs avec un seul bouton
+var textureMapping = {
+  'moelleux':     ['moelleux'],
+  'cremeux':      ['cremeux', 'crémeux', 'fondant'],
+  'croustillant': ['croustillant'],
+  'frais':        ['frais', 'juteux']
 };
 
 document.querySelectorAll('#dessert-grid .envie-btn').forEach(function(btn) {
@@ -663,10 +557,14 @@ document.querySelectorAll('#dessert-grid .envie-btn').forEach(function(btn) {
     document.querySelectorAll('#dessert-grid .envie-btn').forEach(function(b) { b.classList.remove('selected'); });
     btn.classList.add('selected');
 
-    var tex   = btn.dataset.texture;
-    var found = RECETTES.desserts.filter(function(r) { return r.textures.indexOf(tex) !== -1; });
+    var bouton      = btn.dataset.texture;
+    var texValides  = textureMapping[bouton] || [bouton];
 
-    document.getElementById('dessert-results-title').textContent = textureLabels[tex] || '';
+    var found = RECETTES.desserts.filter(function(r) {
+      return (r.textures || []).some(function(t) { return texValides.indexOf(t) !== -1; });
+    });
+
+    document.getElementById('dessert-results-title').textContent = textureLabels[bouton] || '';
     afficherGrille('dessert-results-grid', found);
 
     var res = document.getElementById('dessert-results');
@@ -681,7 +579,7 @@ document.getElementById('dessert-reset').addEventListener('click', function() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-// ── PAGE DÉCOUVRIR ──────────────────────────────────────────────
+// -- PAGE DECOUVRIR ----------------------------------------------
 var filtreActif = 'tous';
 var recherche   = '';
 
@@ -722,55 +620,39 @@ function afficherDecouvrir() {
   if (!grid) return;
 
   if (!pool.length) {
-    grid.innerHTML = '<div class="empty"><div class="empty-icon">🔍</div><p>Aucune recette trouvée.</p></div>';
+    grid.innerHTML = '<div class="empty"><div class="empty-icon">&#128269;</div><p>Aucune recette trouvée.</p></div>';
     return;
   }
 
-  // Dans Découvrir on affiche tout, avec badge "vu récemment" si applicable
-  grid.innerHTML = pool.map(function(r) {
-    return carteHTML(r, estVuRecemment(r._type, r.id));
-  }).join('');
+  grid.innerHTML = pool.map(function(r) { return carteHTML(r, estVuRecemment(r._type, r.id)); }).join('');
 }
 
 afficherDecouvrir();
 
-// ── MODAL ───────────────────────────────────────────────────────
+// -- MODAL -------------------------------------------------------
 function trouverRecette(type, id) {
   var sources = { plat: RECETTES.plats, entree: RECETTES.entrees, dessert: RECETTES.desserts };
-  var liste = sources[type] || [];
-  return liste.find(function(r) { return r.id === id; }) || null;
+  return (sources[type] || []).find(function(r) { return r.id === id; }) || null;
 }
 
 function normaliserIngredients(r) {
   var necessaires = [];
-  var optionnels = [];
-
+  var optionnels  = [];
   if (Array.isArray(r.ingredients)) {
     necessaires = r.ingredients;
   } else if (r.ingredients && typeof r.ingredients === 'object') {
     necessaires = Array.isArray(r.ingredients.necessaires) ? r.ingredients.necessaires : [];
-    optionnels = Array.isArray(r.ingredients.optionnels) ? r.ingredients.optionnels : [];
+    optionnels  = Array.isArray(r.ingredients.optionnels)  ? r.ingredients.optionnels  : [];
   }
-
-  if (Array.isArray(r.ingredientsOptionnels)) {
-    optionnels = optionnels.concat(r.ingredientsOptionnels);
-  }
-  if (Array.isArray(r.optionnels)) {
-    optionnels = optionnels.concat(r.optionnels);
-  }
-
-  return {
-    necessaires: necessaires,
-    optionnels: optionnels
-  };
+  if (Array.isArray(r.ingredientsOptionnels)) optionnels = optionnels.concat(r.ingredientsOptionnels);
+  if (Array.isArray(r.optionnels))            optionnels = optionnels.concat(r.optionnels);
+  return { necessaires: necessaires, optionnels: optionnels };
 }
 
 function nettoyerIngredientSansMesure(ingredient) {
   var s = String(ingredient || '').trim();
   if (!s) return s;
-
-  // Retire quantité + unité en début de chaîne (ex: "250 g", "1/2", "20 cl", "3 c. à soupe").
-  s = s.replace(/^\s*(?:\d+(?:[\.,]\d+)?(?:\s*\/\s*\d+)?|\d+\s*(?:à|-|–)\s*\d+|un|une|quelques?)\s*(?:kg|g|mg|l|cl|ml|c\.?\s*à\s*c\.?|c\.?\s*à\s*s\.?|cuill(?:e|è)re?s?\s*à\s*(?:café|soupe)|sachet(?:s)?|pot(?:s)?|pinc(?:é|e)e?s?|bo[iî]te(?:s)?|verre(?:s)?|filet(?:s)?|tranche(?:s)?|pi[eè]ce(?:s)?|gousse(?:s)?|branches?|feuilles?)?\s*/i, '');
+  s = s.replace(/^\s*(?:\d+(?:[\.,]\d+)?(?:\s*\/\s*\d+)?|\d+\s*(?:a|-)\s*\d+|un|une|quelques?)\s*(?:kg|g|mg|l|cl|ml|c\.?\s*a\s*c\.?|c\.?\s*a\s*s\.?|cuillere?s?\s*a\s*(?:cafe|soupe)|sachet(?:s)?|pot(?:s)?|pincee?s?|boite(?:s)?|verre(?:s)?|filet(?:s)?|tranche(?:s)?|piece(?:s)?|gousse(?:s)?|branches?|feuilles?)?\s*/i, '');
   s = s.replace(/^[dD]'|^[dD]e\s+|^[lL]a\s+|^[lL]e\s+|^[lL]es\s+/, '');
   return s.trim();
 }
@@ -779,7 +661,6 @@ function ouvrirModal(type, id) {
   var r = trouverRecette(type, id);
   if (!r) return;
 
-  // Enregistrer dans l'historique 3 jours
   enregistrerDansHistorique(type, id);
 
   var ingredients = normaliserIngredients(r);
@@ -802,15 +683,23 @@ function ouvrirModal(type, id) {
     '<div class="modal-nom">' + r.nom + '</div>',
     '<div class="modal-desc">' + r.description + '</div>',
     '<div class="modal-meta">',
-    '  <span class="badge">⏱ ' + r.temps + ' min</span>',
+    '  <span class="badge">&#9200; ' + r.temps + ' min</span>',
     '  ' + badgeDiff(r.difficulte),
     '  ' + tagsHTML,
     '</div>',
     '<div class="modal-bloc">',
-    '  <div class="modal-section-title">Ingrédients nécessaires</div>',
+    '  <div class="modal-section-title">Ingr&#233;dients n&#233;cessaires</div>',
     '  <ul class="modal-ingredients-list">' + ingredientsHTML + '</ul>',
     '</div>',
-    optionnelsHTML ? '<div class="modal-bloc"><div class="modal-section-title">Ingrédients optionnels</div><ul class="modal-ingredients-list">' + optionnelsHTML + '</ul></div>' : ''
+    optionnelsHTML
+      ? '<div class="modal-bloc"><div class="modal-section-title">Ingr&#233;dients optionnels</div><ul class="modal-ingredients-list">' + optionnelsHTML + '</ul></div>'
+      : '',
+    // FIX #14 : bouton de partage
+    '<div class="modal-actions">',
+    '  <button class="share-btn" onclick="partagerRecette(\'' + r._type + '\', ' + r.id + ')" aria-label="Partager cette recette">',
+    '    Partager cette recette',
+    '  </button>',
+    '</div>'
   ].join('\n');
 
   document.getElementById('modal-overlay').classList.add('open');
@@ -820,7 +709,6 @@ function ouvrirModal(type, id) {
 function fermerModal() {
   document.getElementById('modal-overlay').classList.remove('open');
   document.body.style.overflow = '';
-  // Rafraîchir Découvrir pour mettre à jour les badges
   afficherDecouvrir();
 }
 
@@ -834,3 +722,43 @@ document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') fermerModal();
   if (e.key === 'Enter' && e.target.classList.contains('recipe-card')) e.target.click();
 });
+
+// -- PARTAGE DE RECETTE (#14) ------------------------------------
+function partagerRecette(type, id) {
+  var r = trouverRecette(type, id);
+  if (!r) return;
+
+  var texteIngredients = (r.ingredients || []).slice(0, 5).join(', ');
+  var shareData = {
+    title: 'Papilles — ' + r.nom,
+    text:  r.nom + '\n' + r.description
+           + '\nIngredients : ' + texteIngredients
+           + '\n' + r.temps + ' min · ' + r.difficulte,
+    url:   'https://ayanlehmahdi.github.io/papilles/'
+  };
+
+  if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+    navigator.share(shareData).catch(function(err) {
+      if (err.name !== 'AbortError') console.warn('Partage echoue.', err);
+    });
+  } else if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(shareData.title + '\n' + shareData.text + '\n' + shareData.url)
+      .then(function()  { afficherToast('Recette copiee dans le presse-papiers !'); })
+      .catch(function() { afficherToast('Partage non disponible sur ce navigateur.'); });
+  } else {
+    afficherToast('Partage non disponible sur ce navigateur.');
+  }
+}
+
+// -- TOAST NOTIFICATION ------------------------------------------
+function afficherToast(message) {
+  var toast         = document.createElement('div');
+  toast.className   = 'toast';
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  setTimeout(function() { toast.classList.add('toast-visible'); }, 10);
+  setTimeout(function() {
+    toast.classList.remove('toast-visible');
+    setTimeout(function() { toast.remove(); }, 300);
+  }, 2800);
+}

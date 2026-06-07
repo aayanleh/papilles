@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -12,7 +13,8 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Papilles" />
   <meta property="og:title" content="Papilles - Idées recettes selon l'humeur" />
-  <meta property="og:description" content="Choisis ton humeur, Papilles te propose le plat parfait en quelques secondes." />
+  <meta property="og:description"
+    content="Choisis ton humeur, Papilles te propose le plat parfait en quelques secondes." />
   <meta property="og:url" content="https://ayanlehmahdi.github.io/papilles/" />
   <meta property="og:image" content="https://ayanlehmahdi.github.io/papilles/icons/papille_social_preview_v2.jpg" />
   <meta property="og:image:alt" content="Aperçu Papilles, application de recommandations de recettes" />
@@ -26,9 +28,17 @@
   <title>Papilles</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Manrope:wght@500;600;700;800&display=swap"
+    rel="stylesheet" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     :root {
       --bg: #f6f2ea;
@@ -81,7 +91,7 @@
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
     }
-    
+
     .install-app-btn {
       position: absolute;
       right: 12px;
@@ -103,16 +113,16 @@
       transition: transform .2s ease, filter .2s ease;
       z-index: 2;
     }
-    
+
     .install-app-btn.show {
       display: inline-flex;
     }
-    
+
     .install-app-btn:hover {
       transform: translateY(-50%) scale(1.03);
       filter: brightness(1.05);
     }
-    
+
     .install-app-btn:active {
       transform: translateY(-50%) scale(.98);
     }
@@ -129,7 +139,9 @@
       text-shadow: 0 6px 20px rgba(200, 116, 42, 0.25);
     }
 
-    .desktop-nav { display: none; }
+    .desktop-nav {
+      display: none;
+    }
 
     .desktop-nav-btn {
       background: rgba(255, 250, 241, 0.7);
@@ -188,7 +200,9 @@
       min-height: 48px;
     }
 
-    .nav-btn:active { transform: scale(.97); }
+    .nav-btn:active {
+      transform: scale(.97);
+    }
 
     .nav-btn.active {
       color: #3a2a1b;
@@ -231,12 +245,25 @@
       min-width: 0;
     }
 
-    .page { display: none; animation: pageIn .45s cubic-bezier(.21,.97,.35,1); }
-    .page.active { display: block; }
+    .page {
+      display: none;
+      animation: pageIn .45s cubic-bezier(.21, .97, .35, 1);
+    }
+
+    .page.active {
+      display: block;
+    }
 
     @keyframes pageIn {
-      from { opacity: 0; transform: translateY(14px) scale(.99); }
-      to   { opacity: 1; transform: translateY(0) scale(1); }
+      from {
+        opacity: 0;
+        transform: translateY(14px) scale(.99);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
 
     .page-title {
@@ -287,7 +314,9 @@
       transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
     }
 
-    .mood-btn:active { transform: scale(.97); }
+    .mood-btn:active {
+      transform: scale(.97);
+    }
 
     .mood-btn.selected {
       border-color: #c3702b;
@@ -295,8 +324,18 @@
       background: linear-gradient(150deg, rgba(252, 233, 208, .94), rgba(242, 222, 198, .94));
     }
 
-    .mood-emoji { font-size: 2.05rem; display: block; margin-bottom: 8px; }
-    .mood-label { font-size: .78rem; font-weight: 700; color: var(--muted); line-height: 1.3; }
+    .mood-emoji {
+      font-size: 2.05rem;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .mood-label {
+      font-size: .78rem;
+      font-weight: 700;
+      color: var(--muted);
+      line-height: 1.3;
+    }
 
     .decision-actions {
       display: flex;
@@ -344,7 +383,7 @@
     }
 
     .surprise-btn.is-spinning .dice {
-      animation: diceSpin .5s cubic-bezier(.2,.75,.3,1) infinite;
+      animation: diceSpin .5s cubic-bezier(.2, .75, .3, 1) infinite;
     }
 
     @keyframes surprisePulse {
@@ -352,10 +391,12 @@
         transform: translateY(0) scale(1);
         box-shadow: 0 0 0 0 rgba(186, 123, 64, 0.2), 0 8px 18px rgba(186, 123, 64, 0.2);
       }
+
       50% {
         transform: translateY(-1px) scale(1.02);
         box-shadow: 0 0 0 8px rgba(186, 123, 64, 0), 0 12px 26px rgba(186, 123, 64, 0.28);
       }
+
       100% {
         transform: translateY(0) scale(1);
         box-shadow: 0 0 0 0 rgba(186, 123, 64, 0), 0 8px 18px rgba(186, 123, 64, 0.2);
@@ -363,11 +404,25 @@
     }
 
     @keyframes diceSpin {
-      0% { transform: rotate(0deg) scale(1); }
-      20% { transform: rotate(95deg) scale(1.15); }
-      45% { transform: rotate(210deg) scale(1.02); }
-      70% { transform: rotate(315deg) scale(1.18); }
-      100% { transform: rotate(360deg) scale(1); }
+      0% {
+        transform: rotate(0deg) scale(1);
+      }
+
+      20% {
+        transform: rotate(95deg) scale(1.15);
+      }
+
+      45% {
+        transform: rotate(210deg) scale(1.02);
+      }
+
+      70% {
+        transform: rotate(315deg) scale(1.18);
+      }
+
+      100% {
+        transform: rotate(360deg) scale(1);
+      }
     }
 
     .envie-grid {
@@ -388,7 +443,9 @@
       text-align: left;
     }
 
-    .envie-btn:active { transform: scale(.985); }
+    .envie-btn:active {
+      transform: scale(.985);
+    }
 
     .envie-btn.selected {
       border-color: #c3702b;
@@ -396,9 +453,22 @@
       background: linear-gradient(150deg, rgba(252, 233, 208, .94), rgba(242, 222, 198, .94));
     }
 
-    .envie-icon { font-size: 1.85rem; flex-shrink: 0; }
-    .envie-info strong { display: block; font-size: .98rem; font-weight: 800; margin-bottom: 2px; }
-    .envie-info span { font-size: .81rem; color: var(--muted); }
+    .envie-icon {
+      font-size: 1.85rem;
+      flex-shrink: 0;
+    }
+
+    .envie-info strong {
+      display: block;
+      font-size: .98rem;
+      font-weight: 800;
+      margin-bottom: 2px;
+    }
+
+    .envie-info span {
+      font-size: .81rem;
+      color: var(--muted);
+    }
 
     .results-header {
       display: flex;
@@ -432,7 +502,9 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    .reset-btn:active { transform: translateY(1px); }
+    .reset-btn:active {
+      transform: translateY(1px);
+    }
 
     .recipe-grid {
       display: grid;
@@ -456,18 +528,55 @@
     }
 
     @keyframes cardIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
-    .recipe-card:active { transform: scale(.99); }
-    .card-recent { opacity: .84; }
-    .card-left { flex-shrink: 0; }
-    .card-emoji { font-size: 2.3rem; line-height: 1; }
-    .card-right { flex: 1; min-width: 0; }
-    .card-header { margin-bottom: 6px; }
-    .card-nom { font-size: 1rem; font-weight: 800; letter-spacing: -0.01em; }
-    .card-origine { font-size: .73rem; color: var(--muted); font-weight: 700; margin-top: 1px; }
+    .recipe-card:active {
+      transform: scale(.99);
+    }
+
+    .card-recent {
+      opacity: .84;
+    }
+
+    .card-left {
+      flex-shrink: 0;
+    }
+
+    .card-emoji {
+      font-size: 2.3rem;
+      line-height: 1;
+    }
+
+    .card-right {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .card-header {
+      margin-bottom: 6px;
+    }
+
+    .card-nom {
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+
+    .card-origine {
+      font-size: .73rem;
+      color: var(--muted);
+      font-weight: 700;
+      margin-top: 1px;
+    }
 
     .card-desc {
       font-size: .83rem;
@@ -480,7 +589,11 @@
       overflow: hidden;
     }
 
-    .card-meta { display: flex; gap: 6px; flex-wrap: wrap; }
+    .card-meta {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
 
     .badge {
       background: rgba(243, 232, 216, .9);
@@ -493,10 +606,25 @@
       white-space: nowrap;
     }
 
-    .badge.diff-facile    { color: #227c4f; border-color: rgba(34,124,79,.35); }
-    .badge.diff-moyen     { color: #8b4a18; border-color: rgba(139,74,24,.35); }
-    .badge.diff-difficile { color: #a13f33; border-color: rgba(161,63,51,.35); }
-    .badge.badge-recent   { color: #8b4a18; border-color: rgba(139,74,24,.35); }
+    .badge.diff-facile {
+      color: #227c4f;
+      border-color: rgba(34, 124, 79, .35);
+    }
+
+    .badge.diff-moyen {
+      color: #8b4a18;
+      border-color: rgba(139, 74, 24, .35);
+    }
+
+    .badge.diff-difficile {
+      color: #a13f33;
+      border-color: rgba(161, 63, 51, .35);
+    }
+
+    .badge.badge-recent {
+      color: #8b4a18;
+      border-color: rgba(139, 74, 24, .35);
+    }
 
     .separator-recent {
       display: flex;
@@ -521,7 +649,10 @@
       padding: 0 4px;
     }
 
-    .search-wrap { position: relative; margin-bottom: 12px; }
+    .search-wrap {
+      position: relative;
+      margin-bottom: 12px;
+    }
 
     .search-icon {
       position: absolute;
@@ -552,7 +683,9 @@
       box-shadow: 0 0 0 3px rgba(195, 112, 43, .16);
     }
 
-    .search-bar::placeholder { color: #9a866f; }
+    .search-bar::placeholder {
+      color: #9a866f;
+    }
 
     .filter-tabs {
       display: flex;
@@ -564,7 +697,9 @@
       padding-bottom: 2px;
     }
 
-    .filter-tabs::-webkit-scrollbar { display: none; }
+    .filter-tabs::-webkit-scrollbar {
+      display: none;
+    }
 
     .filter-tab {
       background: rgba(255, 251, 244, .9);
@@ -594,8 +729,15 @@
       color: var(--muted);
     }
 
-    .empty-icon { font-size: 2.8rem; margin-bottom: 12px; }
-    .empty p { font-size: .92rem; line-height: 1.6; }
+    .empty-icon {
+      font-size: 2.8rem;
+      margin-bottom: 12px;
+    }
+
+    .empty p {
+      font-size: .92rem;
+      line-height: 1.6;
+    }
 
     .modal-overlay {
       display: none;
@@ -609,9 +751,20 @@
       -webkit-backdrop-filter: blur(4px);
     }
 
-    .modal-overlay.open { display: flex; animation: fadeIn .2s ease; }
+    .modal-overlay.open {
+      display: flex;
+      animation: fadeIn .2s ease;
+    }
 
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
 
     .modal {
       background: linear-gradient(165deg, #fffaf1, #f6ead8);
@@ -624,13 +777,20 @@
       padding: 10px 20px calc(28px + var(--safe-b));
       position: relative;
       box-shadow: var(--shadow-strong);
-      animation: sheetUp .3s cubic-bezier(.21,.96,.35,1);
+      animation: sheetUp .3s cubic-bezier(.21, .96, .35, 1);
       -webkit-overflow-scrolling: touch;
     }
 
     @keyframes sheetUp {
-      from { transform: translateY(60px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
+      from {
+        transform: translateY(60px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
     }
 
     .modal-handle {
@@ -662,8 +822,18 @@
       min-height: 44px;
     }
 
-    .modal-emoji { font-size: 3rem; margin-bottom: 6px; }
-    .modal-origine { font-size: .81rem; color: var(--muted); font-weight: 700; margin-bottom: 6px; }
+    .modal-emoji {
+      font-size: 3rem;
+      margin-bottom: 6px;
+    }
+
+    .modal-origine {
+      font-size: .81rem;
+      color: var(--muted);
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
     .modal-nom {
       font-family: 'Fraunces', Georgia, serif;
       font-size: clamp(1.45rem, 4vw, 1.9rem);
@@ -672,8 +842,20 @@
       line-height: 1.2;
       color: #382818;
     }
-    .modal-desc { color: var(--muted); line-height: 1.62; margin-bottom: 18px; font-size: .92rem; }
-    .modal-meta { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 24px; }
+
+    .modal-desc {
+      color: var(--muted);
+      line-height: 1.62;
+      margin-bottom: 18px;
+      font-size: .92rem;
+    }
+
+    .modal-meta {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
 
     .modal-section-title {
       font-size: .69rem;
@@ -684,7 +866,9 @@
       margin-bottom: 10px;
     }
 
-    .modal-bloc { margin-bottom: 24px; }
+    .modal-bloc {
+      margin-bottom: 24px;
+    }
 
     .modal-ingredients-list {
       background: rgba(255, 248, 237, .85);
@@ -704,7 +888,9 @@
       line-height: 1.45;
     }
 
-    .modal-ingredients-list li:last-child { border-bottom: none; }
+    .modal-ingredients-list li:last-child {
+      border-bottom: none;
+    }
 
     .modal-ingredients-list li::before {
       content: '•';
@@ -714,7 +900,10 @@
       flex-shrink: 0;
     }
 
-    .modal-steps-list { list-style: none; counter-reset: steps; }
+    .modal-steps-list {
+      list-style: none;
+      counter-reset: steps;
+    }
 
     .modal-steps-list li {
       counter-increment: steps;
@@ -742,9 +931,18 @@
       margin-top: 2px;
     }
 
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: #d5c4ad; border-radius: 12px; }
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #d5c4ad;
+      border-radius: 12px;
+    }
 
     .mood-btn:focus-visible,
     .surprise-btn:focus-visible,
@@ -760,6 +958,7 @@
     }
 
     @media (hover: hover) and (pointer: fine) {
+
       .mood-btn:hover,
       .envie-btn:hover {
         transform: translateY(-2px);
@@ -794,28 +993,61 @@
     }
 
     @media (min-width: 480px) {
-      .mood-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .mood-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
     }
 
     @media (min-width: 600px) {
-      main { padding: 32px 24px 24px; }
-      .mood-grid { gap: 14px; }
-      .mood-emoji { font-size: 2.3rem; }
-      .mood-label { font-size: .81rem; }
-      .envie-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-      .recipe-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      main {
+        padding: 32px 24px 24px;
+      }
+
+      .mood-grid {
+        gap: 14px;
+      }
+
+      .mood-emoji {
+        font-size: 2.3rem;
+      }
+
+      .mood-label {
+        font-size: .81rem;
+      }
+
+      .envie-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+
+      .recipe-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
       .modal {
         width: min(92vw, 700px);
         border-radius: 24px;
         padding: 22px 24px 28px;
       }
-      .modal-overlay { align-items: center; }
-      .modal-handle { display: none; }
+
+      .modal-overlay {
+        align-items: center;
+      }
+
+      .modal-handle {
+        display: none;
+      }
     }
 
     @media (min-width: 768px) {
-      body { padding-bottom: 0; }
-      .bottom-nav { display: none; }
+      body {
+        padding-bottom: 0;
+      }
+
+      .bottom-nav {
+        display: none;
+      }
 
       header {
         justify-content: space-between;
@@ -828,10 +1060,25 @@
         gap: 6px;
       }
 
-      main { padding: 36px 28px 28px; }
-      .recipe-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .mood-grid { max-width: 640px; margin-left: auto; margin-right: auto; }
-      .envie-grid { max-width: 720px; margin-left: auto; margin-right: auto; }
+      main {
+        padding: 36px 28px 28px;
+      }
+
+      .recipe-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .mood-grid {
+        max-width: 640px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .envie-grid {
+        max-width: 720px;
+        margin-left: auto;
+        margin-right: auto;
+      }
     }
 
     @media (min-width: 1024px) {
@@ -840,18 +1087,33 @@
         padding-top: 14px;
       }
 
-      .desktop-nav-btn { font-size: .88rem; padding: 8px 18px; }
-      
+      .desktop-nav-btn {
+        font-size: .88rem;
+        padding: 8px 18px;
+      }
+
       .install-app-btn {
         right: 28px;
         font-size: .82rem;
         padding: 9px 14px;
       }
 
-      main { padding: 44px 32px 32px; max-width: 1140px; }
-      .mood-grid { max-width: 600px; }
-      .envie-grid { max-width: 700px; }
-      .recipe-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      main {
+        padding: 44px 32px 32px;
+        max-width: 1140px;
+      }
+
+      .mood-grid {
+        max-width: 600px;
+      }
+
+      .envie-grid {
+        max-width: 700px;
+      }
+
+      .recipe-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
 
       .modal {
         max-width: 640px;
@@ -860,248 +1122,322 @@
     }
 
     @media (max-width: 359px) {
-      .nav-label { font-size: .55rem; }
-      .mood-btn { padding: 14px 6px 12px; }
-      .envie-btn { padding: 14px 13px; }
-      .results-title { font-size: .95rem; }
-      .reset-btn { width: 100%; }
-      .search-bar { font-size: .88rem; }
+      .nav-label {
+        font-size: .55rem;
+      }
+
+      .mood-btn {
+        padding: 14px 6px 12px;
+      }
+
+      .envie-btn {
+        padding: 14px 13px;
+      }
+
+      .results-title {
+        font-size: .95rem;
+      }
+
+      .reset-btn {
+        width: 100%;
+      }
+
+      .search-bar {
+        font-size: .88rem;
+      }
+    }
+
+    .modal-actions {
+      margin-top: 8px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .share-btn {
+      background: linear-gradient(120deg, #c8742a, #b94f39);
+      color: #fff8ee;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 24px;
+      font-size: .88rem;
+      font-weight: 800;
+      cursor: pointer;
+      letter-spacing: .02em;
+      box-shadow: 0 8px 18px rgba(185, 79, 57, 0.28);
+      transition: transform .2s ease, filter .2s ease;
+      -webkit-tap-highlight-color: transparent;
+      min-height: 46px;
+    }
+
+    .share-btn:hover {
+      filter: brightness(1.07);
+      transform: translateY(-1px);
+    }
+
+    .share-btn:active {
+      transform: scale(.97);
+    }
+
+    .toast {
+      position: fixed;
+      bottom: calc(90px + var(--safe-b));
+      left: 50%;
+      transform: translateX(-50%) translateY(12px);
+      background: rgba(47, 36, 26, 0.92);
+      color: #fff8ee;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: .84rem;
+      font-weight: 700;
+      opacity: 0;
+      transition: opacity .25s ease, transform .25s ease;
+      pointer-events: none;
+      white-space: nowrap;
+      z-index: 9999;
+      backdrop-filter: blur(6px);
+    }
+
+    .toast.toast-visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
     }
   </style>
 </head>
+
 <body>
 
-<!-- HEADER -->
-<header>
-  <div class="logo">Papilles 👅</div>
-  <button class="install-app-btn" id="install-app-btn" type="button" aria-label="Installer l'application">⬇ Installer</button>
-  <nav class="desktop-nav">
-    <button class="desktop-nav-btn active" data-page="plat">🍽️ Plat</button>
-    <button class="desktop-nav-btn" data-page="entree">🥗 Entrée</button>
-    <button class="desktop-nav-btn" data-page="dessert">🍰 Dessert</button>
-    <button class="desktop-nav-btn" data-page="decouvrir">📖 Découvrir</button>
-  </nav>
-</header>
+  <!-- HEADER -->
+  <header>
+    <div class="logo">Papilles 👅</div>
+    <button class="install-app-btn" id="install-app-btn" type="button" aria-label="Installer l'application">⬇
+      Installer</button>
+    <nav class="desktop-nav">
+      <button class="desktop-nav-btn active" data-page="plat">🍽️ Plat</button>
+      <button class="desktop-nav-btn" data-page="entree">🥗 Entrée</button>
+      <button class="desktop-nav-btn" data-page="dessert">🍰 Dessert</button>
+      <button class="desktop-nav-btn" data-page="decouvrir">📖 Découvrir</button>
+    </nav>
+  </header>
 
-<main>
+  <main>
 
-  <!-- ══ PAGE PLAT ══ -->
-  <div class="page active" id="page-plat">
-    <div class="page-title">
-      <h1>Princesse, comment tu te sens là ?</h1>
-      <p>Clique sur ton humeur et Papilles s'occupe du reste.</p>
-    </div>
-
-    <div class="mood-grid">
-      <button class="mood-btn" data-mood="fatigué">
-        <span class="mood-emoji">😴</span>
-        <span class="mood-label">Fatiguée</span>
-      </button>
-      <button class="mood-btn" data-mood="joyeux">
-        <span class="mood-emoji">😄</span>
-        <span class="mood-label">Joyeuse</span>
-      </button>
-      <button class="mood-btn" data-mood="stressé">
-        <span class="mood-emoji">😤</span>
-        <span class="mood-label">Stressée</span>
-      </button>
-      <button class="mood-btn" data-mood="amoureux">
-        <span class="mood-emoji">🥰</span>
-        <span class="mood-label">Amoureuse</span>
-      </button>
-      <button class="mood-btn" data-mood="sportif">
-        <span class="mood-emoji">💪</span>
-        <span class="mood-label">Sportive</span>
-      </button>
-      <button class="mood-btn" data-mood="curieux">
-        <span class="mood-emoji">🌍</span>
-        <span class="mood-label">Curieuse</span>
-      </button>
-    </div>
-
-    <div class="decision-actions">
-      <button class="surprise-btn" id="plat-surprise">✨ Surprise, décide pour moi</button>
-    </div>
-
-    <div id="plat-results" style="display:none">
-      <div class="results-header">
-        <span class="results-title" id="plat-results-title"></span>
-        <button class="reset-btn" id="plat-reset">✕ Changer</button>
+    <!-- ══ PAGE PLAT ══ -->
+    <div class="page active" id="page-plat">
+      <div class="page-title">
+        <h1>Princesse, comment tu te sens là ?</h1>
+        <p>Clique sur ton humeur et Papilles s'occupe du reste.</p>
       </div>
-      <div class="recipe-grid" id="plat-grid"></div>
-    </div>
-  </div>
 
-  <!-- ══ PAGE ENTRÉE ══ -->
-  <div class="page" id="page-entree">
-    <div class="page-title">
-      <h1>T'as envie de quoi comme entrée ? 🌿</h1>
-      <p>Dis-moi dans quel état tu es, je t'inspire.</p>
-    </div>
-
-    <div class="envie-grid" id="entree-grid">
-      <button class="envie-btn" data-envie="frais">
-        <span class="envie-icon">🌿</span>
-        <div class="envie-info">
-          <strong>Frais &amp; Léger</strong>
-          <span>Salades, crudités, carpaccio</span>
-        </div>
-      </button>
-      <button class="envie-btn" data-envie="chaud">
-        <span class="envie-icon">🔥</span>
-        <div class="envie-info">
-          <strong>Chaud &amp; Réconfortant</strong>
-          <span>Soupe, velouté, bouillon</span>
-        </div>
-      </button>
-      <button class="envie-btn" data-envie="festif">
-        <span class="envie-icon">🎉</span>
-        <div class="envie-info">
-          <strong>Coloré &amp; Festif</strong>
-          <span>Bouchées, crêpes, partage</span>
-        </div>
-      </button>
-      <button class="envie-btn" data-envie="express">
-        <span class="envie-icon">⚡</span>
-        <div class="envie-info">
-          <strong>Express</strong>
-          <span>Moins de 15 min, sans effort</span>
-        </div>
-      </button>
-    </div>
-
-    <div class="decision-actions">
-      <button class="surprise-btn" id="entree-surprise">✨ Surprise entrée</button>
-    </div>
-
-    <div id="entree-results" style="display:none">
-      <div class="results-header">
-        <span class="results-title" id="entree-results-title"></span>
-        <button class="reset-btn" id="entree-reset">✕ Changer</button>
+      <div class="mood-grid">
+        <button class="mood-btn" data-mood="fatigué">
+          <span class="mood-emoji">😴</span>
+          <span class="mood-label">Fatiguée</span>
+        </button>
+        <button class="mood-btn" data-mood="joyeux">
+          <span class="mood-emoji">😄</span>
+          <span class="mood-label">Joyeuse</span>
+        </button>
+        <button class="mood-btn" data-mood="stressé">
+          <span class="mood-emoji">😤</span>
+          <span class="mood-label">Stressée</span>
+        </button>
+        <button class="mood-btn" data-mood="amoureux">
+          <span class="mood-emoji">🥰</span>
+          <span class="mood-label">Amoureuse</span>
+        </button>
+        <button class="mood-btn" data-mood="sportif">
+          <span class="mood-emoji">💪</span>
+          <span class="mood-label">Sportive</span>
+        </button>
+        <button class="mood-btn" data-mood="curieux">
+          <span class="mood-emoji">🌍</span>
+          <span class="mood-label">Curieuse</span>
+        </button>
       </div>
-      <div class="recipe-grid" id="entree-results-grid"></div>
-    </div>
-  </div>
 
-  <!-- ══ PAGE DESSERT ══ -->
-  <div class="page" id="page-dessert">
-    <div class="page-title">
-      <h1>Quelle texture te fait craquer ? 🍭</h1>
-      <p>Laisse tes envies sucrées guider le choix.</p>
-    </div>
-
-    <div class="envie-grid" id="dessert-grid">
-      <button class="envie-btn" data-texture="chocolaté">
-        <span class="envie-icon">🍫</span>
-        <div class="envie-info">
-          <strong>Chocolaté</strong>
-          <span>Intense, fondant, irrésistible</span>
-        </div>
-      </button>
-      <button class="envie-btn" data-texture="fruité">
-        <span class="envie-icon">🍓</span>
-        <div class="envie-info">
-          <strong>Fruité</strong>
-          <span>Frais, acidulé, solaire</span>
-        </div>
-      </button>
-      <button class="envie-btn" data-texture="croustillant">
-        <span class="envie-icon">🥐</span>
-        <div class="envie-info">
-          <strong>Croustillant</strong>
-          <span>Croquant, doré, feuilleté</span>
-        </div>
-      </button>
-      <button class="envie-btn" data-texture="crémeux">
-        <span class="envie-icon">🍮</span>
-        <div class="envie-info">
-          <strong>Crémeux</strong>
-          <span>Onctueux, doux, fondant</span>
-        </div>
-      </button>
-    </div>
-
-    <div class="decision-actions">
-      <button class="surprise-btn" id="dessert-surprise">✨ Surprise dessert</button>
-    </div>
-
-    <div id="dessert-results" style="display:none">
-      <div class="results-header">
-        <span class="results-title" id="dessert-results-title"></span>
-        <button class="reset-btn" id="dessert-reset">✕ Changer</button>
+      <div class="decision-actions">
+        <button class="surprise-btn" id="plat-surprise">✨ Surprise, décide pour moi</button>
       </div>
-      <div class="recipe-grid" id="dessert-results-grid"></div>
-    </div>
-  </div>
 
-  <!-- ══ PAGE DÉCOUVRIR ══ -->
-  <div class="page" id="page-decouvrir">
-    <div class="page-title">
-      <h1>Toutes mes recettes 📖</h1>
-      <p>Explore, cherche, laisse-toi tenter.</p>
-    </div>
-
-    <div class="search-wrap">
-      <span class="search-icon">🔍</span>
-      <input class="search-bar" type="search" id="search-input"
-             placeholder="Chercher une recette, un ingrédient, un pays…"
-             autocomplete="off" autocorrect="off" />
+      <div id="plat-results" style="display:none">
+        <div class="results-header">
+          <span class="results-title" id="plat-results-title"></span>
+          <button class="reset-btn" id="plat-reset">✕ Changer</button>
+        </div>
+        <div class="recipe-grid" id="plat-grid"></div>
+      </div>
     </div>
 
-    <div class="filter-tabs">
-      <button class="filter-tab active" data-filter="tous">Tout voir</button>
-      <button class="filter-tab" data-filter="plat">🍽️ Plats</button>
-      <button class="filter-tab" data-filter="entree">🥗 Entrées</button>
-      <button class="filter-tab" data-filter="dessert">🍰 Desserts</button>
+    <!-- ══ PAGE ENTRÉE ══ -->
+    <div class="page" id="page-entree">
+      <div class="page-title">
+        <h1>T'as envie de quoi comme entrée ? 🌿</h1>
+        <p>Qu'est-ce qui te tente comme entrée ?</p>
+      </div>
+
+      <div class="envie-grid" id="entree-grid">
+        <button class="envie-btn" data-envie="frais">
+          <span class="envie-icon">🌿</span>
+          <div class="envie-info">
+            <strong>Frais &amp; Léger</strong>
+            <span>Salades, crudités, carpaccio</span>
+          </div>
+        </button>
+        <button class="envie-btn" data-envie="chaud">
+          <span class="envie-icon">🔥</span>
+          <div class="envie-info">
+            <strong>Chaud &amp; Réconfortant</strong>
+            <span>Soupe, velouté, bouillon</span>
+          </div>
+        </button>
+        <button class="envie-btn" data-envie="festif">
+          <span class="envie-icon">🎉</span>
+          <div class="envie-info">
+            <strong>Coloré &amp; Festif</strong>
+            <span>Bouchées, crêpes, partage</span>
+          </div>
+        </button>
+        <button class="envie-btn" data-envie="express">
+          <span class="envie-icon">⚡</span>
+          <div class="envie-info">
+            <strong>Express</strong>
+            <span>Moins de 15 min, sans effort</span>
+          </div>
+        </button>
+      </div>
+
+      <div class="decision-actions">
+        <button class="surprise-btn" id="entree-surprise">✨ Surprise entrée</button>
+      </div>
+
+      <div id="entree-results" style="display:none">
+        <div class="results-header">
+          <span class="results-title" id="entree-results-title"></span>
+          <button class="reset-btn" id="entree-reset">✕ Changer</button>
+        </div>
+        <div class="recipe-grid" id="entree-results-grid"></div>
+      </div>
     </div>
 
-    <div class="recipe-grid" id="decouvrir-grid"></div>
-  </div>
+    <!-- ══ PAGE DESSERT ══ -->
+    <div class="page" id="page-dessert">
+      <div class="page-title">
+        <h1>Quelle texture pour le dessert ?</h1>
+        <p>Laisse tes envies sucrées guider le choix.</p>
+      </div>
 
-</main>
-
-<!-- BOTTOM NAV (mobile & tablette) -->
-<nav class="bottom-nav" aria-label="Navigation principale">
-  <button class="nav-btn active" data-page="plat">
-    <span class="nav-icon">🍽️</span>
-    <span class="nav-label">Plat</span>
+      <div class="envie-grid" id="dessert-grid">
+  <button class="envie-btn" data-texture="moelleux">
+    <span class="envie-icon">🍰</span>
+    <div class="envie-info">
+      <strong>Moelleux</strong>
+      <span>Doux, tendre, réconfortant</span>
+    </div>
   </button>
-  <button class="nav-btn" data-page="entree">
-    <span class="nav-icon">🥗</span>
-    <span class="nav-label">Entrée</span>
+  <button class="envie-btn" data-texture="cremeux">
+    <span class="envie-icon">🍮</span>
+    <div class="envie-info">
+      <strong>Crémeux & Fondant</strong>
+      <span>Onctueux, doux, irrésistible</span>
+    </div>
   </button>
-  <button class="nav-btn" data-page="dessert">
-    <span class="nav-icon">🍰</span>
-    <span class="nav-label">Dessert</span>
+  <button class="envie-btn" data-texture="croustillant">
+    <span class="envie-icon">🥐</span>
+    <div class="envie-info">
+      <strong>Croustillant</strong>
+      <span>Croquant, doré, feuilleté</span>
+    </div>
   </button>
-  <button class="nav-btn" data-page="decouvrir">
-    <span class="nav-icon">📖</span>
-    <span class="nav-label">Découvrir</span>
+  <button class="envie-btn" data-texture="frais">
+    <span class="envie-icon">🍓</span>
+    <div class="envie-info">
+      <strong>Frais & Fruité</strong>
+      <span>Léger, acidulé, solaire</span>
+    </div>
   </button>
-</nav>
-
-<!-- MODAL -->
-<div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-label="Fiche recette">
-  <div class="modal" id="modal-content">
-    <div class="modal-handle"></div>
-    <button class="modal-close" id="modal-close" aria-label="Fermer">✕</button>
-    <div id="modal-body"></div>
-  </div>
 </div>
 
-<!-- CHARGEMENT DES SCRIPTS : recettes.js AVANT app.js -->
-<script src="recettes.js"></script>
-<script src="app.js"></script>
-<script>
-  // L'installation PWA fonctionne via HTTPS (ou localhost), pas en file://
-  if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
-    window.addEventListener('load', function () {
-      navigator.serviceWorker.register('./sw.js').catch(function (err) {
-        console.warn('Papilles: enregistrement du service worker impossible.', err);
+      <div class="decision-actions">
+        <button class="surprise-btn" id="dessert-surprise">✨ Surprise dessert</button>
+      </div>
+
+      <div id="dessert-results" style="display:none">
+        <div class="results-header">
+          <span class="results-title" id="dessert-results-title"></span>
+          <button class="reset-btn" id="dessert-reset">✕ Changer</button>
+        </div>
+        <div class="recipe-grid" id="dessert-results-grid"></div>
+      </div>
+    </div>
+
+    <!-- ══ PAGE DÉCOUVRIR ══ -->
+    <div class="page" id="page-decouvrir">
+      <div class="page-title">
+        <h1>Toutes mes recettes</h1>
+        <p>Explore, cherche, laisse-toi tenter.</p>
+      </div>
+
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input class="search-bar" type="search" id="search-input"
+          placeholder="Chercher une recette, un ingrédient, un pays…" autocomplete="off" autocorrect="off" />
+      </div>
+
+      <div class="filter-tabs">
+        <button class="filter-tab active" data-filter="tous">All</button>
+        <button class="filter-tab" data-filter="plat">🍽️ Plats</button>
+        <button class="filter-tab" data-filter="entree">🥗 Entrées</button>
+        <button class="filter-tab" data-filter="dessert">🍰 Desserts</button>
+      </div>
+
+      <div class="recipe-grid" id="decouvrir-grid"></div>
+    </div>
+
+  </main>
+
+  <!-- BOTTOM NAV (mobile & tablette) -->
+  <nav class="bottom-nav" aria-label="Navigation principale">
+    <button class="nav-btn active" data-page="plat">
+      <span class="nav-icon">🍽️</span>
+      <span class="nav-label">Plat</span>
+    </button>
+    <button class="nav-btn" data-page="entree">
+      <span class="nav-icon">🥗</span>
+      <span class="nav-label">Entrée</span>
+    </button>
+    <button class="nav-btn" data-page="dessert">
+      <span class="nav-icon">🍰</span>
+      <span class="nav-label">Dessert</span>
+    </button>
+    <button class="nav-btn" data-page="decouvrir">
+      <span class="nav-icon">📓</span>
+      <span class="nav-label">Inventaire</span>
+    </button>
+  </nav>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-label="Fiche recette">
+    <div class="modal" id="modal-content">
+      <div class="modal-handle"></div>
+      <button class="modal-close" id="modal-close" aria-label="Fermer">✕</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- CHARGEMENT DES SCRIPTS : recettes.js AVANT app.js -->
+  <script src="recettes.js"></script>
+  <script src="app.js"></script>
+  <script>
+    // L'installation PWA fonctionne via HTTPS (ou localhost), pas en file://
+    if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('./sw.js').catch(function (err) {
+          console.warn('Papilles: enregistrement du service worker impossible.', err);
+        });
       });
-    });
-  }
-</script>
+    }
+  </script>
 
 </body>
+
 </html>
