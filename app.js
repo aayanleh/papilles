@@ -412,11 +412,16 @@ function unlockAudioIfNeeded() {
   window.addEventListener('touchstart',  unlock, { once: true, passive: true });
 }
 
+var audioStartTime = {
+  click:    0.25,     // commence au debut
+  roulette: 1,   // ignore la premiere seconde
+};
+
 function jouerFichierSon(kind) {
   try {
     var a = getAudioElement(kind);
     if (!a) return;
-    a.currentTime = 0;
+    a.currentTime = audioStartTime[kind] !== undefined ? audioStartTime[kind] : 0;
     var p = a.play();
     if (p && typeof p.catch === 'function') p.catch(function() {});
   } catch (e) {}
