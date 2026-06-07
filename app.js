@@ -3,6 +3,51 @@
 // ================================================================
 
 // -- HISTORIQUE 3 JOURS ------------------------------------------
+
+
+// -- MISE A JOUR AUTOMATIQUE ---------------------------------
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js').then(function(reg) {
+
+    reg.addEventListener('updatefound', function() {
+      var newSW = reg.installing;
+      newSW.addEventListener('statechange', function() {
+        if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
+          // Nouveau SW pret, ancienne version encore active
+          afficherBanniereMAJ(newSW);
+        }
+      });
+    });
+
+  });
+
+  // Recharger si le SW prend le controle (apres skipWaiting)
+  var refreshing = false;
+  navigator.serviceWorker.addEventListener('controllerchange', function() {
+    if (!refreshing) {
+      refreshing = true;
+      window.location.reload();
+    }
+  });
+}
+
+function afficherBanniereMAJ(newSW) {
+  var banniere = document.createElement('div');
+  banniere.className = 'update-banner';
+  banniere.innerHTML = '<span>Nouvelle version disponible !</span>'
+    + '<button onclick="activerMAJ()">Mettre a jour</button>';
+  document.body.appendChild(banniere);
+  setTimeout(function() { banniere.classList.add('visible'); }, 50);
+  window._newSW = newSW;
+}
+
+function activerMAJ() {
+  if (window._newSW) {
+    window._newSW.postMessage({ type: 'SKIP_WAITING' });
+  }
+}
+
+
 var HISTORY_KEY   = 'papilles_historique';
 var JOURS_BLOCAGE = 3;
 var TOP_PLAT_KEY  = 'papilles_top_plat_jour';
@@ -435,13 +480,40 @@ function arreterSon(kind) {
 
 function jouerSonRoulette() { jouerFichierSon('roulette'); }
 function jouerSonReveal()   { jouerFichierSon('reveal');   }
-function jouerSonClick()    { jouerFichierSon('click');    }
+
+var audioCtx = null;
+
+function getAudioContext() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  return audioCtx;
+}
+
+function jouerTickSynthetique() {
+  try {
+    var ctx  = getAudioContext();
+    var osc  = ctx.createOscillator();
+    var gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(600, ctx.currentTime);
+    gain.gain.setValueAtTime(0.1, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.04);
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + 0.04);
+  } catch (e) {}
+}
 
 function activerSonClickGlobal() {
-  var sel = 'button, [data-page], .mood-btn, .envie-btn, .filter-tab, .recipe-card, #modal-close, [role="button"]';
+  var sel = 'button, [data-page], .mood-btn, .envie-btn, .naim-btn, .filter-tab, .recipe-card, #modal-close, [role="button"]';
   document.addEventListener('click', function(e) {
     var cible = e.target && e.target.closest ? e.target.closest(sel) : null;
-    if (cible) jouerSonClick();
+    if (!cible) return;
+    jouerTickSynthetique();
+    if ('vibrate' in navigator) navigator.vibrate(8);
   }, true);
 }
 

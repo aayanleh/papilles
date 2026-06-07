@@ -1,4 +1,4 @@
-const APP_VERSION = '3.0';
+const APP_VERSION = '3.1';
 const CACHE_NAME = `papilles-v${APP_VERSION}`;
 const APP_SHELL = [
   './',
@@ -48,4 +48,12 @@ self.addEventListener('fetch', (event) => {
         .catch(() => caches.match('./index.html'));
     })
   );
+});
+
+
+// Ajouter dans sw.js
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });
