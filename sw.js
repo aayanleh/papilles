@@ -1,12 +1,12 @@
-const CACHE_NAME = 'papilles-v1';
+const CACHE_NAME = 'papilles-v2';
 const APP_SHELL = [
   './',
   './index.html',
   './app.js',
   './recettes.js',
   './manifest.webmanifest',
-  './icons/icon-192.png',
-  './icons/icon-512.png'
+  './icons/icon-192.jpg',
+  './icons/icon-512.jpg'
 ];
 
 self.addEventListener('install', (event) => {

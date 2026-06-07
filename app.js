@@ -100,8 +100,21 @@ function estDejaInstallee() {
   return standaloneIOS || standalonePWA;
 }
 
+function estNavigateurDesktop() {
+  return window.matchMedia && window.matchMedia('(min-width: 768px)').matches;
+}
+
+function estContexteInstallableWeb() {
+  return location.protocol === 'https:' || location.hostname === 'localhost';
+}
+
 if (installAppBtn && estDejaInstallee()) {
   afficherBoutonInstall(false);
+}
+
+if (installAppBtn && !estDejaInstallee() && estContexteInstallableWeb() && estNavigateurDesktop()) {
+  // Fallback desktop: le prompt navigateur peut ne pas être immédiatement disponible.
+  afficherBoutonInstall(true);
 }
 
 window.addEventListener('beforeinstallprompt', function(e) {
@@ -117,7 +130,10 @@ window.addEventListener('appinstalled', function() {
 
 if (installAppBtn) {
   installAppBtn.addEventListener('click', async function() {
-    if (!deferredInstallPrompt) return;
+    if (!deferredInstallPrompt) {
+      alert('Installation PC:\nChrome/Edge > menu (⋮) > Installer Papilles.\n\nSi l\'option n\'apparaît pas: recharge la page (Ctrl+F5) puis réessaie.');
+      return;
+    }
 
     deferredInstallPrompt.prompt();
     try {
@@ -218,7 +234,6 @@ var DUREE_ROULETTE_MS = 500;
 var SON_SURPRISE_ACTIF = true;
 var audioUnlocked = false;
 var audioFiles = {
-  roulette: 'sounds/roulette_bOfDHqhZ.mp3',
   reveal: 'sounds/roulette_bOfDHqhZ.mp3'
 };
 var audioElements = {
