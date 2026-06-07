@@ -7,7 +7,7 @@ const RECETTES = {
             description: 'Poulet mijote avec petits pois servi avec du riz blanc.',
             temps: 35,
             difficulte: 'facile',
-            humeurs: ['fatigue', 'stresse', 'sportif', 'curieux'],
+            humeurs: ['fatiguée', 'stressée', 'Sportive', 'curieuse'],
             tags: ['riz', 'mijote', 'familial'],
             ingredients: [
                 'Poulet',
@@ -25,7 +25,7 @@ const RECETTES = {
             description: 'Viande de boeuf ou de poulet en sauce arachide onctueuse avec riz blanc.',
             temps: 45,
             difficulte: 'moyen',
-            humeurs: ['sportif', 'joyeux', 'curieux'],
+            humeurs: ['Sportive', 'joyeuse', 'curieuse'],
             tags: ['riz', 'arachide', 'tradition'],
             ingredients: [
                 'Viande de boeuf ou de poulet',
@@ -43,7 +43,7 @@ const RECETTES = {
             description: 'Poisson assaisonne servi avec Attieke. Bananes plantain dorees en option.',
             temps: 35,
             difficulte: 'moyen',
-            humeurs: ['curieux', 'joyeux', 'amoureux'],
+            humeurs: ['curieuse', 'joyeuse', 'amoureux'],
             tags: ['poisson', 'plantain', 'complet'],
             ingredients: [
                 'Poisson',
@@ -62,7 +62,7 @@ const RECETTES = {
             description: 'Haricots mijotes avec viande de boeuf ou de poulet et base de tomates. Servi avec riz et/ou pain.',
             temps: 45,
             difficulte: 'facile',
-            humeurs: ['sportif', 'stresse'],
+            humeurs: ['Sportive', 'stressée'],
             tags: ['mijote', 'proteines', 'familial'],
             ingredients: [
                 'Haricots',
@@ -79,8 +79,8 @@ const RECETTES = {
             emoji: '\u{1FAD8}',
             description: 'Lentilles fondantes bien assaisonnees avec baguette croustillante.',
             temps: 30,
-            difficulte: 'tres facile',
-            humeurs: ['fatigue', 'stresse', 'sportif'],
+            difficulte: 'très facile',
+            humeurs: ['fatiguée', 'stressée', 'Sportive'],
             tags: ['economique', 'proteines', 'reconfort'],
             ingredients: [
                 'Lentilles jaunes ou noires',
@@ -97,8 +97,8 @@ const RECETTES = {
             emoji: '\u{1F957}',
             description: 'Salade fraiche de legumes croquants avec des oeufs durs, simple et coloree.',
             temps: 15,
-            difficulte: 'tres facile',
-            humeurs: ['fatigue', 'joyeux', 'sportif', 'stresse'],
+            difficulte: 'très facile',
+            humeurs: ['fatiguée', 'joyeuse', 'Sportive', 'stressée'],
             tags: ['leger', 'frais', 'rapide'],
             ingredients: [
                 'Tomates',
@@ -118,7 +118,7 @@ const RECETTES = {
             description: 'Soupe de viande et legumes, servie avec du riz blanc et salade en option.',
             temps: 60,
             difficulte: 'moyen',
-            humeurs: ['curieux', 'joyeux'],
+            humeurs: ['curieuse', 'joyeuse'],
             tags: ['tradition', 'riz', 'reconfort'],
             ingredients: [
                 "Viande de boeuf ou d'agneau",
@@ -140,7 +140,7 @@ const RECETTES = {
             description: 'Quiche maison genereuse avec poulet ou viande hachee.',
             temps: 45,
             difficulte: 'facile',
-            humeurs: ['joyeux', 'amoureux'],
+            humeurs: ['joyeuse', 'amoureux'],
             tags: ['four', 'familial', 'partage'],
             ingredients: [
                 'Pate brisee ou faite maison',
@@ -159,7 +159,7 @@ const RECETTES = {
             description: 'Pates a la bolognaise maison, riches et reconfortantes.',
             temps: 30,
             difficulte: 'facile',
-            humeurs: ['fatigue', 'joyeux', 'amoureux'],
+            humeurs: ['fatiguée', 'joyeuse', 'amoureux'],
             tags: ['pates', 'tomate', 'incontournable'],
             ingredients: [
                 'Pates',
@@ -178,7 +178,7 @@ const RECETTES = {
             description: 'Pâtes crémeuses au poulet, rapides et savoureuses.',
             temps: 25,
             difficulte: 'facile',
-            humeurs: ['fatigue', 'amoureux', 'joyeux'],
+            humeurs: ['fatiguée', 'amoureux', 'joyeuse'],
             tags: ['pâtes', 'crémeux', 'express'],
             ingredients: [
                 'Pâtes',
@@ -196,7 +196,7 @@ const RECETTES = {
             description: 'Haricots en sauce tomate servis avec baguette croustillante.',
             temps: 35,
             difficulte: 'facile',
-            humeurs: ['stresse', 'fatigue', 'sportif'],
+            humeurs: ['stressée', 'fatiguéee', 'Sportive'],
             tags: ['vegetal', 'economique', 'reconfort'],
             ingredients: [
                 'Haricots',
@@ -214,7 +214,7 @@ const RECETTES = {
             description: 'Tacos gourmands au poulet ou boeuf hache avec garniture maison.',
             temps: 25,
             difficulte: 'facile',
-            humeurs: ['joyeux', 'amoureux', 'curieux'],
+            humeurs: ['joyeuse', 'amoureux', 'curieuse'],
             tags: ['street food', 'convivial', 'rapide'],
             ingredients: [
                 'Galettes tortillas',
@@ -232,8 +232,8 @@ const RECETTES = {
             emoji: '\u{1F354}',
             description: 'Burger maison genereux, croustillant et fondant.',
             temps: 20,
-            difficulte: 'tres facile',
-            humeurs: ['joyeux', 'sportif', 'fatigue'],
+            difficulte: 'très facile',
+            humeurs: ['joyeuse', 'Sportive', 'fatiguée'],
             tags: ['rapide', 'plaisir', 'convivial'],
             ingredients: [
                 'Pains burger maison',
@@ -252,7 +252,7 @@ const RECETTES = {
             description: 'Pizza maison doree avec garniture au choix.',
             temps: 30,
             difficulte: 'facile',
-            humeurs: ['joyeux', 'amoureux', 'fatigue'],
+            humeurs: ['joyeuse', 'amoureux', 'fatiguée'],
             tags: ['four', 'partage', 'incontournable'],
             ingredients: [
                 'Pate a pizza ou faite maison',
@@ -270,7 +270,7 @@ const RECETTES = {
             description: "Poulet frit croustillant a l'exterieur et tendre a l'interieur.",
             temps: 40,
             difficulte: 'moyen',
-            humeurs: ['joyeux', 'amoureux'],
+            humeurs: ['joyeuse', 'amoureux'],
             tags: ['croustillant', 'plaisir', 'partage'],
             ingredients: [
                 'Poulet',
@@ -288,7 +288,7 @@ const RECETTES = {
             description: 'Nuggets de poulet maison croustillants et moelleux.',
             temps: 30,
             difficulte: 'facile',
-            humeurs: ['joyeux', 'fatigue', 'sportif'],
+            humeurs: ['joyeuse', 'fatiguée', 'Sportive'],
             tags: ['rapide', 'croustillant', 'enfants'],
             ingredients: [
                 'Poulet',
@@ -306,7 +306,7 @@ const RECETTES = {
             description: 'Poisson assaisonne servi avec bananes plantain dorees.',
             temps: 35,
             difficulte: 'moyen',
-            humeurs: ['curieux', 'joyeux', 'amoureux'],
+            humeurs: ['curieuse', 'joyeuse', 'amoureux'],
             tags: ['poisson', 'plantain', 'complet'],
             ingredients: [
                 'Poisson',
@@ -430,7 +430,7 @@ const RECETTES = {
             emoji: '\u{1F353}',
             description: 'Melange de fruits frais de saison, leger et parfume.',
             temps: 15,
-            difficulte: 'tres facile',
+            difficulte: 'très facile',
             textures: ['frais', 'juteux'],
             tags: ['dessert frais', 'leger', 'fruite'],
             ingredients: [
@@ -445,7 +445,7 @@ const RECETTES = {
             emoji: '\u{1F95E}',
             description: 'Crepes maison moelleuses, parfaites au gouter.',
             temps: 40,
-            difficulte: 'tres facile',
+            difficulte: 'très facile',
             textures: ['moelleux'],
             tags: ['creperie', 'gouter', 'classique'],
             ingredients: ['Farine', 'Oeufs', 'Lait', 'Sucre', 'Huile', 'Sel'],
@@ -467,7 +467,7 @@ const RECETTES = {
             emoji: '\u{1F370}',
             description: 'Gateau au yaourt moelleux et simple a preparer.',
             temps: 40,
-            difficulte: 'tres facile',
+            difficulte: 'très facile',
             textures: ['moelleux'],
             tags: ['gateau', 'familial', 'classique'],
             ingredients: ['Yaourt nature', 'Sucre', 'Farine', 'Huile', 'Oeufs', 'Levure'],

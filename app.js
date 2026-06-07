@@ -184,12 +184,12 @@ function afficherGrille(containerId, recettes) {
 
 // -- PAGE PLAT ---------------------------------------------------
 var moodLabels = {
-  'fatigué':  'Pour quand t\'es a plat',
-  'joyeux':   'Pour celebrer ce beau jour',
-  'stressé':  'Pour decompresser',
-  'amoureux': 'Pour faire battre les cœurs',
-  'sportif':  'Pour le corps en mouvement',
-  'curieux':  'Pour voyager sans bouger'
+  'fatiguée':  'Pour quand t\'es a plat',
+  'joyeuse':   'Pour celebrer ce beau jour',
+  'stressée':  'Pour decompresser',
+  'amoureuse': 'Pour faire battre les cœurs',
+  'sportive':  'Pour le corps en mouvement',
+  'curieuse':  'Pour voyager sans bouger'
 };
 
 var NB_SUGGESTIONS_HUMEUR = 2;
@@ -215,12 +215,12 @@ var audioElements = {
 };
 
 var moodPreferences = {
-  'fatigué':  { maxTemps: 30, preferDifficulte: ['très facile', 'facile'], tags: ['rapide', 'express', 'riz', 'familial', 'reconfort'] },
-  'joyeux':   { maxTemps: 40, preferDifficulte: ['facile', 'moyen'],       tags: ['partage', 'convivial', 'barbecue', 'street food'] },
-  'stressé':  { maxTemps: 35, preferDifficulte: ['très facile', 'facile'], tags: ['reconfort', 'mijote', 'riz', 'familial'] },
-  'amoureux': { maxTemps: 50, preferDifficulte: ['facile', 'moyen'],       tags: ['partage', 'tradition', 'sauce', 'barbecue'] },
-  'sportif':  { maxTemps: 40, preferDifficulte: ['facile', 'moyen'],       tags: ['proteines', 'complet', 'viande', 'poulet'] },
-  'curieux':  { maxTemps: 60, preferDifficulte: ['moyen', 'facile'],       tags: ['tradition', 'africain', 'street food', 'poisson'] }
+  'fatiguée':  { maxTemps: 30, preferDifficulte: ['très facile', 'facile'], tags: ['rapide', 'express', 'riz', 'familial', 'reconfort'] },
+  'joyeuse':   { maxTemps: 40, preferDifficulte: ['facile', 'moyen'],       tags: ['partage', 'convivial', 'barbecue', 'street food'] },
+  'stressée':  { maxTemps: 35, preferDifficulte: ['très facile', 'facile'], tags: ['reconfort', 'mijote', 'riz', 'familial'] },
+  'amoureuse': { maxTemps: 50, preferDifficulte: ['facile', 'moyen'],       tags: ['partage', 'tradition', 'sauce', 'barbecue'] },
+  'sportive':  { maxTemps: 40, preferDifficulte: ['facile', 'moyen'],       tags: ['proteines', 'complet', 'viande', 'poulet'] },
+  'curieuse':  { maxTemps: 60, preferDifficulte: ['moyen', 'facile'],       tags: ['tradition', 'africain', 'street food', 'poisson'] }
 };
 
 function bonusStableDuJour(id, mood) {

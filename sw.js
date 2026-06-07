@@ -1,4 +1,4 @@
-const CACHE_NAME = 'papilles-v2';
+const CACHE_NAME = 'papilles-v4';
 const APP_SHELL = [
   './',
   './index.html',
