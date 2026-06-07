@@ -1,4 +1,4 @@
-const APP_VERSION = '2.5';
+const APP_VERSION = '2.6';
 const CACHE_NAME = `papilles-v${APP_VERSION}`;
 const APP_SHELL = [
   './',
@@ -7,7 +7,9 @@ const APP_SHELL = [
   './recettes.js',
   './manifest.webmanifest',
   './icons/icon-192.jpg',
-  './icons/icon-512.jpg'
+  './icons/icon-512.jpg',
+  './sounds/click.mp3',
+  './sounds/roulette_bOfDHqhZ.mp3'
 ];
 
 self.addEventListener('install', (event) => {
@@ -21,9 +23,7 @@ self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
       Promise.all(
-        keys
-          .filter((key) => key !== CACHE_NAME)
-          .map((key) => caches.delete(key))
+        keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
       )
     )
   );
@@ -33,12 +33,12 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const request = event.request;
 
+  if (!request.url.startsWith('http')) return;   // ignore chrome-extension etc.
   if (request.method !== 'GET') return;
 
   event.respondWith(
     caches.match(request).then((cached) => {
       if (cached) return cached;
-
       return fetch(request)
         .then((response) => {
           const responseCopy = response.clone();
