@@ -1,4 +1,4 @@
-const APP_VERSION = '3.1';
+const APP_VERSION = '3.2';
 const CACHE_NAME = `papilles-v${APP_VERSION}`;
 const APP_SHELL = [
   './',

@@ -1,4 +1,4 @@
-const version = '3.1';
+const version = '3.2';
 const RECETTES = {
     plats: [
         {
@@ -8,7 +8,7 @@ const RECETTES = {
             description: 'Poulet mijote avec petits pois servi avec du riz blanc.',
             temps: 35,
             difficulte: 'facile',
-            humeurs: ['fatiguée', 'stressée', 'Sportive', 'curieuse'],
+            humeurs: ['fatiguée', 'stressée', 'sportive', 'curieuse'],
             tags: ['riz', 'mijote', 'familial'],
             ingredients: [
                 'Poulet',
@@ -26,7 +26,7 @@ const RECETTES = {
             description: 'Viande de boeuf ou de poulet en sauce arachide onctueuse avec riz blanc.',
             temps: 45,
             difficulte: 'moyen',
-            humeurs: ['Sportive', 'joyeuse', 'curieuse'],
+            humeurs: ['sportive', 'joyeuse', 'curieuse'],
             tags: ['riz', 'arachide', 'tradition'],
             ingredients: [
                 'Viande de boeuf ou de poulet',
@@ -63,7 +63,7 @@ const RECETTES = {
             description: 'Haricots mijotes avec viande de boeuf ou de poulet et base de tomates. Servi avec riz et/ou pain.',
             temps: 45,
             difficulte: 'facile',
-            humeurs: ['Sportive', 'stressée'],
+            humeurs: ['sportive', 'stressée'],
             tags: ['mijote', 'proteines', 'familial'],
             ingredients: [
                 'Haricots',
@@ -81,7 +81,7 @@ const RECETTES = {
             description: 'Lentilles fondantes bien assaisonnees avec baguette croustillante.',
             temps: 30,
             difficulte: 'très facile',
-            humeurs: ['fatiguée', 'stressée', 'Sportive'],
+            humeurs: ['fatiguée', 'stressée', 'sportive'],
             tags: ['economique', 'proteines', 'reconfort'],
             ingredients: [
                 'Lentilles jaunes ou noires',
@@ -99,7 +99,7 @@ const RECETTES = {
             description: 'Salade fraiche de legumes croquants avec des oeufs durs, simple et coloree.',
             temps: 15,
             difficulte: 'très facile',
-            humeurs: ['fatiguée', 'joyeuse', 'Sportive', 'stressée'],
+            humeurs: ['fatiguée', 'joyeuse', 'sportive', 'stressée'],
             tags: ['leger', 'frais', 'rapide'],
             ingredients: [
                 'Tomates',
@@ -197,7 +197,7 @@ const RECETTES = {
             description: 'Haricots en sauce tomate servis avec baguette croustillante.',
             temps: 35,
             difficulte: 'facile',
-            humeurs: ['stressée', 'fatiguéee', 'Sportive'],
+            humeurs: ['stressée', 'fatiguée', 'sportive'],
             tags: ['vegetal', 'economique', 'reconfort'],
             ingredients: [
                 'Haricots',
@@ -234,7 +234,7 @@ const RECETTES = {
             description: 'Burger maison genereux, croustillant et fondant.',
             temps: 20,
             difficulte: 'très facile',
-            humeurs: ['joyeuse', 'Sportive', 'fatiguée'],
+            humeurs: ['joyeuse', 'sportive', 'fatiguée'],
             tags: ['rapide', 'plaisir', 'convivial'],
             ingredients: [
                 'Pains burger maison',
@@ -289,7 +289,7 @@ const RECETTES = {
             description: 'Nuggets de poulet maison croustillants et moelleux.',
             temps: 30,
             difficulte: 'facile',
-            humeurs: ['joyeuse', 'fatiguée', 'Sportive'],
+            humeurs: ['joyeuse', 'fatiguée', 'sportive'],
             tags: ['rapide', 'croustillant', 'enfants'],
             ingredients: [
                 'Poulet',
