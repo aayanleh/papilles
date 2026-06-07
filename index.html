@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-app-version="6.0">
 
 <head>
   <meta charset="UTF-8" />
@@ -38,6 +38,10 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+    }
+
+    .nav-btn .nav-label {
+      font-size: .60rem;
     }
 
     :root {
@@ -137,6 +141,28 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
       text-shadow: 0 6px 20px rgba(200, 116, 42, 0.25);
+    }
+
+    .logo-wrap {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .app-version {
+      font-family: 'Manrope', 'Segoe UI', Arial, sans-serif;
+      font-size: .68rem;
+      font-weight: 800;
+      letter-spacing: .04em;
+      color: #8e7861;
+      background: rgba(255, 248, 237, 0.9);
+      border: 1px solid rgba(210, 187, 160, 0.95);
+      border-radius: 999px;
+      padding: 3px 8px;
+      line-height: 1;
+      box-shadow: 0 4px 10px rgba(88, 59, 33, 0.08);
+      white-space: nowrap;
     }
 
     .desktop-nav {
@@ -1201,6 +1227,39 @@
       opacity: 1;
       transform: translateX(-50%) translateY(0);
     }
+
+    .naim-filters {
+      display: flex;
+      gap: 8px;
+      padding: 0 16px 16px;
+      flex-wrap: wrap;
+    }
+
+    .naim-btn {
+      background: var(--bg-card);
+      border: 2px solid var(--border);
+      border-radius: 999px;
+      padding: 10px 20px;
+      font-size: .85rem;
+      font-weight: 700;
+      cursor: pointer;
+      color: var(--text);
+      transition: all .2s ease;
+    }
+
+    .naim-btn.selected,
+    .naim-btn:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff8ee;
+    }
+
+    /* Ajouter apres .recipe-grid { ... } */
+    .recipes-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
   </style>
 </head>
 
@@ -1208,14 +1267,20 @@
 
   <!-- HEADER -->
   <header>
-    <div class="logo">Papilles 👅</div>
+    <div class="logo-wrap">
+      <div class="logo">Papilles 👅</div>
+      <span class="app-version" id="app-version" hidden></span>
+    </div>
     <button class="install-app-btn" id="install-app-btn" type="button" aria-label="Installer l'application">⬇
       Installer</button>
     <nav class="desktop-nav">
       <button class="desktop-nav-btn active" data-page="plat">🍽️ Plat</button>
       <button class="desktop-nav-btn" data-page="entree">🥗 Entrée</button>
       <button class="desktop-nav-btn" data-page="dessert">🍰 Dessert</button>
-      <button class="desktop-nav-btn" data-page="decouvrir">📖 Découvrir</button>
+      <button class="desktop-nav-btn" data-page="naim" aria-label="Naïm">
+        <span class="nav-icon">👶 Naïm</span>
+      </button>
+      <button class="desktop-nav-btn" data-page="decouvrir">📓 Inventaire</button>
     </nav>
   </header>
 
@@ -1241,11 +1306,11 @@
           <span class="mood-emoji">😤</span>
           <span class="mood-label">stresséee</span>
         </button>
-        <button class="mood-btn" data-mood="amoureux">
+        <button class="mood-btn" data-mood="amoureuse">
           <span class="mood-emoji">🥰</span>
           <span class="mood-label">Amoureuse</span>
         </button>
-        <button class="mood-btn" data-mood="Sportive">
+        <button class="mood-btn" data-mood="sportive">
           <span class="mood-emoji">💪</span>
           <span class="mood-label">Sportive</span>
         </button>
@@ -1327,35 +1392,35 @@
       </div>
 
       <div class="envie-grid" id="dessert-grid">
-  <button class="envie-btn" data-texture="moelleux">
-    <span class="envie-icon">🍰</span>
-    <div class="envie-info">
-      <strong>Moelleux</strong>
-      <span>Doux, tendre, réconfortant</span>
-    </div>
-  </button>
-  <button class="envie-btn" data-texture="cremeux">
-    <span class="envie-icon">🍮</span>
-    <div class="envie-info">
-      <strong>Crémeux & Fondant</strong>
-      <span>Onctueux, doux, irrésistible</span>
-    </div>
-  </button>
-  <button class="envie-btn" data-texture="croustillant">
-    <span class="envie-icon">🥐</span>
-    <div class="envie-info">
-      <strong>Croustillant</strong>
-      <span>Croquant, doré, feuilleté</span>
-    </div>
-  </button>
-  <button class="envie-btn" data-texture="frais">
-    <span class="envie-icon">🍓</span>
-    <div class="envie-info">
-      <strong>Frais & Fruité</strong>
-      <span>Léger, acidulé, solaire</span>
-    </div>
-  </button>
-</div>
+        <button class="envie-btn" data-texture="moelleux">
+          <span class="envie-icon">🍰</span>
+          <div class="envie-info">
+            <strong>Moelleux</strong>
+            <span>Doux, tendre, réconfortant</span>
+          </div>
+        </button>
+        <button class="envie-btn" data-texture="cremeux">
+          <span class="envie-icon">🍮</span>
+          <div class="envie-info">
+            <strong>Crémeux & Fondant</strong>
+            <span>Onctueux, doux, irrésistible</span>
+          </div>
+        </button>
+        <button class="envie-btn" data-texture="croustillant">
+          <span class="envie-icon">🥐</span>
+          <div class="envie-info">
+            <strong>Croustillant</strong>
+            <span>Croquant, doré, feuilleté</span>
+          </div>
+        </button>
+        <button class="envie-btn" data-texture="frais">
+          <span class="envie-icon">🍓</span>
+          <div class="envie-info">
+            <strong>Frais & Fruité</strong>
+            <span>Léger, acidulé, solaire</span>
+          </div>
+        </button>
+      </div>
 
       <div class="decision-actions">
         <button class="surprise-btn" id="dessert-surprise">✨ Surprise dessert</button>
@@ -1385,6 +1450,7 @@
 
       <div class="filter-tabs">
         <button class="filter-tab active" data-filter="tous">All</button>
+        <button class="filter-tab" data-filter="naim">👶 Naïm</button>
         <button class="filter-tab" data-filter="plat">🍽️ Plats</button>
         <button class="filter-tab" data-filter="entree">🥗 Entrées</button>
         <button class="filter-tab" data-filter="dessert">🍰 Desserts</button>
@@ -1392,6 +1458,20 @@
 
       <div class="recipe-grid" id="decouvrir-grid"></div>
     </div>
+
+    <section class="page" id="page-naim">
+
+      <div class="page-title">
+        <h1>Gouters de Naïm</h1>
+        <p>Naïm, ses biberons et ses petits plaisirs du gouter.</p>
+      </div>
+
+
+
+
+      <!-- Grille -->
+      <div class="recipes-grid" id="naim-grid-results"></div>
+    </section>
 
   </main>
 
@@ -1412,6 +1492,10 @@
     <button class="nav-btn" data-page="decouvrir">
       <span class="nav-icon">📓</span>
       <span class="nav-label">Inventaire</span>
+    </button>
+    <button class="nav-btn" data-page="naim">
+      <span class="nav-icon">👶</span>
+      <span class="nav-label">Naïm</span>
     </button>
   </nav>
 

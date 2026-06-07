@@ -95,8 +95,42 @@ function estContexteInstallableWeb() {
   return location.protocol === 'https:' || location.hostname === 'localhost';
 }
 
+function formaterVersionDepuisCache(cacheName) {
+  var brut = String(cacheName || '').trim();
+  if (!brut) return '';
+  var m = brut.match(/(?:^|[-_])v?(\d+(?:\.\d+)*)$/i);
+  var version = m ? m[1] : brut;
+  return 'Version ' + version;
+}
+
+function appliquerVersionBadge(cacheName) {
+  var badge = document.getElementById('app-version');
+  if (!badge) return;
+  var label = formaterVersionDepuisCache(cacheName);
+  if (!label) return;
+  badge.textContent = label;
+  badge.hidden = false;
+}
+
+function lireVersionDepuisRecettes() {
+  if (typeof version === 'undefined' || version === null) return '';
+  return String(version).trim();
+}
+
+function afficherVersionDepuisServiceWorker() {
+  var recettesVersion = lireVersionDepuisRecettes();
+  if (recettesVersion) {
+    appliquerVersionBadge(recettesVersion);
+    return;
+  }
+
+  var fallbackVersion = document.documentElement.getAttribute('data-app-version');
+  appliquerVersionBadge(fallbackVersion);
+}
+
 if (installAppBtn && estDejaInstallee())                                              afficherBoutonInstall(false);
 if (installAppBtn && !estDejaInstallee() && estContexteInstallableWeb() && estNavigateurDesktop()) afficherBoutonInstall(true);
+afficherVersionDepuisServiceWorker();
 
 window.addEventListener('beforeinstallprompt', function(e) {
   e.preventDefault();
@@ -184,15 +218,16 @@ function afficherGrille(containerId, recettes) {
 
 // -- PAGE PLAT ---------------------------------------------------
 var moodLabels = {
-  'fatiguée':  'Pour quand t\'es a plat',
-  'joyeuse':   'Pour celebrer ce beau jour',
-  'stressée':  'Pour decompresser',
+  'fatiguée':  'Pour quand t\'es à plat',
+  'joyeuse':   'Pour célébrer ce beau jour',
+  'stressée':  'Pour décompresser',
   'amoureuse': 'Pour faire battre les cœurs',
   'sportive':  'Pour le corps en mouvement',
   'curieuse':  'Pour voyager sans bouger'
 };
 
-var NB_SUGGESTIONS_HUMEUR = 2;
+
+var NB_SUGGESTIONS_HUMEUR = 3;
 var lastSurpriseByType    = { plat: null, entree: null, dessert: null };
 var DUREE_ROULETTE_MS     = 500;
 var SON_SURPRISE_ACTIF    = true;
@@ -287,7 +322,7 @@ function platsParHumeurPertinents(mood) {
 
 function titreResultatHumeur(mood, nb) {
   var base    = moodLabels[mood] || '';
-  var labelNb = (nb <= 1) ? 'Ton plat du jour' : 'Ton plat du jour + 1 alternative';
+  var labelNb = (nb <= 1) ? 'Ton plat du jour' : 'Ton plat du jour + 2 alternatives';
   return base ? (base + ' · ' + labelNb) : labelNb;
 }
 
@@ -605,6 +640,8 @@ function afficherDecouvrir() {
   if (filtreActif === 'tous' || filtreActif === 'plat')    pool = pool.concat(RECETTES.plats);
   if (filtreActif === 'tous' || filtreActif === 'entree')   pool = pool.concat(RECETTES.entrees);
   if (filtreActif === 'tous' || filtreActif === 'dessert')  pool = pool.concat(RECETTES.desserts);
+  if (filtreActif === 'tous' || filtreActif === 'naim')     pool = pool.concat(RECETTES.naim || []);
+
 
   if (recherche) {
     pool = pool.filter(function(r) {
@@ -631,7 +668,8 @@ afficherDecouvrir();
 
 // -- MODAL -------------------------------------------------------
 function trouverRecette(type, id) {
-  var sources = { plat: RECETTES.plats, entree: RECETTES.entrees, dessert: RECETTES.desserts };
+  var sources = { plat: RECETTES.plats, entree: RECETTES.entrees, dessert: RECETTES.desserts, naim:RECETTES.naim || []
+ };
   return (sources[type] || []).find(function(r) { return r.id === id; }) || null;
 }
 
@@ -762,3 +800,28 @@ function afficherToast(message) {
     setTimeout(function() { toast.remove(); }, 300);
   }, 2800);
 }
+
+// -- NAIM : enrichissement ------------------------------------
+RECETTES.naim = (RECETTES.naim || []).map(function(r) {
+    return Object.assign({}, r, { _type: 'naim' });
+});
+
+// -- NAIM : filtres ------------------------------------------
+document.querySelectorAll('#naim-grid .naim-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+        document.querySelectorAll('#naim-grid .naim-btn').forEach(function(b) {
+            b.classList.remove('selected');
+        });
+        btn.classList.add('selected');
+
+        var cat   = btn.dataset.categorie;
+        var found = cat === 'tous'
+            ? RECETTES.naim
+            : RECETTES.naim.filter(function(r) { return r.categorie === cat; });
+
+        afficherGrille('naim-grid-results', found);
+    });
+});
+
+// Afficher tout par defaut au chargement
+afficherGrille('naim-grid-results', RECETTES.naim);

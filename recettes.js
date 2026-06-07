@@ -1,3 +1,4 @@
+const version = '2.3';
 const RECETTES = {
     plats: [
         {
@@ -43,7 +44,7 @@ const RECETTES = {
             description: 'Poisson assaisonne servi avec Attieke. Bananes plantain dorees en option.',
             temps: 35,
             difficulte: 'moyen',
-            humeurs: ['curieuse', 'joyeuse', 'amoureux'],
+            humeurs: ['curieuse', 'joyeuse', 'amoureuse'],
             tags: ['poisson', 'plantain', 'complet'],
             ingredients: [
                 'Poisson',
@@ -140,7 +141,7 @@ const RECETTES = {
             description: 'Quiche maison genereuse avec poulet ou viande hachee.',
             temps: 45,
             difficulte: 'facile',
-            humeurs: ['joyeuse', 'amoureux'],
+            humeurs: ['joyeuse', 'amoureuse'],
             tags: ['four', 'familial', 'partage'],
             ingredients: [
                 'Pate brisee ou faite maison',
@@ -159,7 +160,7 @@ const RECETTES = {
             description: 'Pates a la bolognaise maison, riches et reconfortantes.',
             temps: 30,
             difficulte: 'facile',
-            humeurs: ['fatiguée', 'joyeuse', 'amoureux'],
+            humeurs: ['fatiguée', 'joyeuse', 'amoureuse'],
             tags: ['pates', 'tomate', 'incontournable'],
             ingredients: [
                 'Pates',
@@ -178,7 +179,7 @@ const RECETTES = {
             description: 'Pâtes crémeuses au poulet, rapides et savoureuses.',
             temps: 25,
             difficulte: 'facile',
-            humeurs: ['fatiguée', 'amoureux', 'joyeuse'],
+            humeurs: ['fatiguée', 'amoureuse', 'joyeuse'],
             tags: ['pâtes', 'crémeux', 'express'],
             ingredients: [
                 'Pâtes',
@@ -214,7 +215,7 @@ const RECETTES = {
             description: 'Tacos gourmands au poulet ou boeuf hache avec garniture maison.',
             temps: 25,
             difficulte: 'facile',
-            humeurs: ['joyeuse', 'amoureux', 'curieuse'],
+            humeurs: ['joyeuse', 'amoureuse', 'curieuse'],
             tags: ['street food', 'convivial', 'rapide'],
             ingredients: [
                 'Galettes tortillas',
@@ -252,7 +253,7 @@ const RECETTES = {
             description: 'Pizza maison doree avec garniture au choix.',
             temps: 30,
             difficulte: 'facile',
-            humeurs: ['joyeuse', 'amoureux', 'fatiguée'],
+            humeurs: ['joyeuse', 'amoureuse', 'fatiguée'],
             tags: ['four', 'partage', 'incontournable'],
             ingredients: [
                 'Pate a pizza ou faite maison',
@@ -270,7 +271,7 @@ const RECETTES = {
             description: "Poulet frit croustillant a l'exterieur et tendre a l'interieur.",
             temps: 40,
             difficulte: 'moyen',
-            humeurs: ['joyeuse', 'amoureux'],
+            humeurs: ['joyeuse', 'amoureuse'],
             tags: ['croustillant', 'plaisir', 'partage'],
             ingredients: [
                 'Poulet',
@@ -306,7 +307,7 @@ const RECETTES = {
             description: 'Poisson assaisonne servi avec bananes plantain dorees.',
             temps: 35,
             difficulte: 'moyen',
-            humeurs: ['curieuse', 'joyeuse', 'amoureux'],
+            humeurs: ['curieuse', 'joyeuse', 'amoureuse'],
             tags: ['poisson', 'plantain', 'complet'],
             ingredients: [
                 'Poisson',
@@ -508,5 +509,78 @@ const RECETTES = {
             tags: ['dessert froid', 'incontournable', 'patisserie'],
             ingredients: ['Mascarpone', 'Oeufs', 'Sucre', 'Biscuits cuillere', 'Cafe fort', 'Cacao en poudre'],
         }
+
+        
     ],
+    // A ajouter a la fin de RECETTES, apres desserts :
+naim: [
+    // -- BIBERONS --
+    {
+        id: 301,
+        nom: 'Biberon lait tout seul',
+        emoji: '🍼',
+        description: 'Lait chaud ou tiede, simple et rassurant.',
+        temps: 3,
+        difficulte: 'très facile',
+        categorie: 'biberon',
+        tags: ['lait', 'simple'],
+        ingredients: ['Lait bebe ou lait entier']
+    },
+    {
+        id: 302,
+        nom: 'Biberon chocolate',
+        emoji: '🍼',
+        description: 'Son biberon du matin avec une touche de cacao doux.',
+        temps: 3,
+        difficulte: 'très facile',
+        categorie: 'biberon',
+        tags: ['chocolat', 'matin'],
+        ingredients: ['Lait', 'Chocolat en poudre bébé']
+    },
+    {
+        id: 303,
+        nom: 'Biberon avec céréales',
+        emoji: '🍼',
+        description: 'Lait enrichi de céréales bébé. Rassasiant, idéal avant la sieste.',
+        temps: 3,
+        difficulte: 'très facile',
+        categorie: 'biberon',
+        tags: ['céréales', 'rassasiant'],
+        ingredients: ['Lait', 'Céréales bébé']
+    },
+    // -- GOUTERS --
+    {
+        id: 304,
+        nom: 'Salade de fruits frais',
+        emoji: '🍓',
+        description: 'Petits dés de fruits mous selon la saison. Banane, fraise, poire, pastèque, mélon, mangue.',
+        temps: 5,
+        difficulte: 'très facile',
+        categorie: 'gouter',
+        tags: ['fruits', 'frais', 'sans cuisson'],
+        ingredients: ['Banane', 'Fraises ou poire', 'Kiwi', 'Mangue', 'Pastèque', 'Melon'] 
+    },
+    {
+        id: 305,
+        nom: 'Yaourt nature, banane écrasée et pain',
+        emoji: '🍌',
+        description: 'Yaourt nature, banane bien mûre et bouts de pain.',
+        temps: 3,
+        difficulte: 'très facile',
+        categorie: 'gouter',
+        tags: ['yaourt', 'banane', 'classique'],
+        ingredients: ['Yaourt nature', 'Banane mûre', 'Pain mou ou biscuits bébé']
+    },
+    {
+        id: 306,
+        nom: 'Yaourt avec biscuits à tremper',
+        emoji: '🍪',
+        description: 'Yaourt nature et biscuits. Il adore tremper.',
+        temps: 2,
+        difficulte: 'très facile',
+        categorie: 'gouter',
+        tags: ['yaourt', 'biscuits', 'classique'],
+        ingredients: ['Yaourt nature', 'Biscuits bébé ou boudoirs']
+    }
+]
 };
